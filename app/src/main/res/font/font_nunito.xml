@@ -7,6 +7,6 @@
         app:font="@font/font_nunito_regular"/>
     <font
         app:fontWeight="700"
-        app:fontStyle="normal"
+        android:fontStyle="normal"
         app:font="@font/font_nunito_semi_bold"/>
 </font-family>
