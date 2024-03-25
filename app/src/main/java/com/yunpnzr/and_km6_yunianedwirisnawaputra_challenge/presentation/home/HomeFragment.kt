@@ -25,8 +25,6 @@ class HomeFragment : Fragment() {
     private var catalogAdapter: CatalogMenuAdapter? = null
     private var categoryAdapter = CategoryMenuAdapter()
 
-    private var isUsingListMode: Boolean = false
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
@@ -39,9 +37,10 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setListCategoryMenu()
-        setListCatalog(isUsingListMode)
         setClickCatalog()
         setSearchBar()
+
+        observeListMode()
     }
 
     private fun setSearchBar() {
@@ -52,9 +51,14 @@ class HomeFragment : Fragment() {
 
     private fun setClickCatalog() {
         binding.layoutListCatalog.ivModeCatalog.setOnClickListener{
-            isUsingListMode = !isUsingListMode
-            setGridOrList(isUsingListMode)
-            setListCatalog(isUsingListMode)
+            viewModel.changeListMode()
+        }
+    }
+
+    private fun observeListMode(){
+        viewModel.isUsingGridMode.observe(viewLifecycleOwner){isUsingGridMode ->
+            setGridOrList(isUsingGridMode)
+            setListCatalog(isUsingGridMode)
         }
     }
 
@@ -69,7 +73,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun setListCatalog(usingListMode: Boolean) {
-        val listMode = if (isUsingListMode) {
+        val listMode = if (usingListMode) {
             CatalogMenuAdapter.LIST_MODE
         } else {
             CatalogMenuAdapter.GRID_MODE
