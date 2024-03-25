@@ -2,4 +2,10 @@
     <string name="app_name">Food App</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="search_menu">Mau cari apa?</string>
+    <string name="loading_text">Memuat data...</string>
+    <string name="discount">Diskon 10%!</string>
+    <string name="desc_banner">Dapatkan diskonmu disini</string>
+    <string name="currency">Rp.</string>
+    <string name="price">0</string>
 </resources>
