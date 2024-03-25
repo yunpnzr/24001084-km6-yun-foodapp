@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardElevation="4dp"
+    app:cardCornerRadius="4dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/iv_catalog_menu"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:layout_marginVertical="8dp"
+            android:layout_marginStart="8dp"
+            android:elevation="8dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintDimensionRatio="1:1"
+            android:src="@drawable/img_loading_picture"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/view_catalog"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginHorizontal="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_catalog_menu"
+            app:layout_constraintStart_toEndOf="@+id/iv_catalog_menu"
+            app:layout_constraintTop_toTopOf="@id/iv_catalog_menu"/>
+
+        <TextView
+            android:id="@+id/tv_catalog_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Memuat data..."
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/view_catalog"
+            app:layout_constraintEnd_toEndOf="@+id/view_catalog"
+            app:layout_constraintStart_toStartOf="@+id/view_catalog" />
+
+        <TextView
+            android:id="@+id/tv_currency"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Rp."
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="@+id/view_catalog"
+            app:layout_constraintTop_toBottomOf="@+id/tv_catalog_name" />
+
+        <TextView
+            android:id="@+id/tv_price_catalog"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:text="0"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_currency"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tv_currency"
+            app:layout_constraintTop_toTopOf="@+id/tv_currency" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

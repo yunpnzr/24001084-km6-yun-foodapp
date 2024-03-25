@@ -1,5 +1,6 @@
 package com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.datasource
 
+import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.R
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.model.Catalog
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.model.Category
 
@@ -13,10 +14,10 @@ class AppDataSourceImpl: AppDataSource{
     //data category menu
     override fun getCategoryDataSource(): List<Category> {
         return mutableListOf(
-            /*Category(image = R.drawable.img_rice, name = "Nasi"),
-            Category(image = R.drawable.img_noodle, name = "Mie"),
-            Category(image = R.drawable.img_snack, name = "Snack"),
-            Category(image = R.drawable.img_drink, name = "Minuman")*/
+            Category(image = R.drawable.ic_rice, name = "Nasi"),
+            Category(image = R.drawable.ic_noodle, name = "Mie"),
+            Category(image = R.drawable.ic_snack, name = "Snack"),
+            Category(image = R.drawable.ic_drink, name = "Minuman")
         )
     }
 
