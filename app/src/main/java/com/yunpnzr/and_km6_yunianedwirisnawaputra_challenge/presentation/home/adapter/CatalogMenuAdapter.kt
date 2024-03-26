@@ -1,4 +1,4 @@
-package com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.adapter
+package com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.presentation.home.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

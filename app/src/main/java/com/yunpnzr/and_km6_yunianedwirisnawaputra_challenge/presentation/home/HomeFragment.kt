@@ -4,23 +4,39 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.R
-import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.adapter.CatalogMenuAdapter
-import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.adapter.CategoryMenuAdapter
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.base.OnItemClickedListener
+import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.datasource.catalog.DummyCatalogDataSource
+import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.datasource.category.DummyCategoryDataSource
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.model.Catalog
+import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.repository.CatalogRepository
+import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.repository.CatalogRepositoryImpl
+import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.repository.CategoryRepository
+import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.repository.CategoryRepositoryImpl
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.databinding.FragmentHomeBinding
+import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.presentation.detailfood.DetailFoodActivity
+import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.presentation.home.adapter.CatalogMenuAdapter
+import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.presentation.home.adapter.CategoryMenuAdapter
+import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.utils.GenericViewModelFactory
 
 class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
 
-    private val viewModel: HomeViewModel by viewModels()
+    private val viewModel: HomeViewModel by viewModels {
+        val categoryDataSource = DummyCategoryDataSource()
+        val categoryRepository: CategoryRepository = CategoryRepositoryImpl(categoryDataSource)
+        val catalogDataSource = DummyCatalogDataSource()
+        val catalogRepository: CatalogRepository = CatalogRepositoryImpl(catalogDataSource)
+        GenericViewModelFactory.create(HomeViewModel(categoryRepository,catalogRepository))
+    }
 
     private var catalogAdapter: CatalogMenuAdapter? = null
     private var categoryAdapter = CategoryMenuAdapter()
@@ -83,7 +99,7 @@ class HomeFragment : Fragment() {
             listMode = listMode,
             listener = object: OnItemClickedListener<Catalog> {
                 override fun onClicked(item: Catalog) {
-                    //navigateToDetail(item)
+                    navigateToDetail(item)
                 }
             }
         )
@@ -100,11 +116,11 @@ class HomeFragment : Fragment() {
 
     }
 
-    /*private fun navigateToDetail(item: Catalog) {
+    private fun navigateToDetail(item: Catalog) {
         val navController = findNavController()
-        val bundleActivityDetail = bundleOf(Pair(DetailActivity.EXTRAS_ITEM,item))
-        navController.navigate(R.id.action_navigation_home_to_detailActivity, bundleActivityDetail)
-    }*/
+        val bundleActivityDetailFood = bundleOf(Pair(DetailFoodActivity.EXTRAS_ITEM,item))
+        navController.navigate(R.id.action_menu_tab_home_to_detail_food_activity, bundleActivityDetailFood)
+    }
 
     private fun setListCategoryMenu() {
         categoryAdapter.clear()

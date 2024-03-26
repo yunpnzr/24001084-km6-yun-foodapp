@@ -8,4 +8,10 @@
     <string name="desc_banner">Dapatkan diskonmu disini</string>
     <string name="currency">Rp.</string>
     <string name="price">0</string>
+    <string name="add_cart_minus">-</string>
+    <string name="add_cart_plus">+</string>
+    <string name="add_cart">Tambah ke keranjang - Rp.0</string>
+    <string name="title_location">Lokasi</string>
+    <string name="show_price_add_cart_button">Tambah ke keranjang - Rp.</string>
+    <string name="error_data">Data error, tidak ditemukan</string>
 </resources>

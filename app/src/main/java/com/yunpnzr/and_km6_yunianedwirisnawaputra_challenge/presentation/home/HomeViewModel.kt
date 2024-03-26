@@ -3,18 +3,25 @@ package com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.presentation.home
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.datasource.AppDataSource
-import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.datasource.AppDataSourceImpl
+import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.repository.CatalogRepository
+import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.repository.CategoryRepository
 
-class HomeViewModel: ViewModel() {
+class HomeViewModel(
+    private val categoryRepository: CategoryRepository,
+    private val catalogRepository: CatalogRepository
+): ViewModel() {
 
-    private val dataSource: AppDataSource by lazy { AppDataSourceImpl() }
+    //private val dataSource: AppDataSource by lazy { AppDataSourceImpl() }
     private val _isUsingGridMode = MutableLiveData(false)
     val isUsingGridMode: LiveData<Boolean>
         get() = _isUsingGridMode
 
-    fun getCategoryList() = dataSource.getCategoryDataSource()
-    fun getCatalogList() = dataSource.getCatalogDataSource()
+    //fun getCategoryList() = dataSource.getCategoryDataSource()
+    //fun getCatalogList() = dataSource.getCatalogDataSource()
+
+    fun getCatalogList() = catalogRepository.getCatalog()
+    fun getCategoryList() = categoryRepository.getCategory()
+
     fun changeListMode(){
         val currentValue = _isUsingGridMode.value?:false
         _isUsingGridMode.postValue(!currentValue)

@@ -1,29 +1,10 @@
-package com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.datasource
+package com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.datasource.catalog
 
-import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.R
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.model.Catalog
-import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.model.Category
 
-interface AppDataSource{
-    fun getCategoryDataSource(): List<Category>
-    fun getCatalogDataSource(): List<Catalog>
-}
-
-class AppDataSourceImpl: AppDataSource{
-
-    //data category menu
-    override fun getCategoryDataSource(): List<Category> {
-        return mutableListOf(
-            Category(image = R.drawable.ic_rice, name = "Nasi"),
-            Category(image = R.drawable.ic_noodle, name = "Mie"),
-            Category(image = R.drawable.ic_snack, name = "Snack"),
-            Category(image = R.drawable.ic_drink, name = "Minuman")
-        )
-    }
-
-    //data catalog
+class DummyCatalogDataSource: CatalogDataSource {
     override fun getCatalogDataSource(): List<Catalog> {
-        return mutableListOf(
+        return listOf(
             Catalog(
                 imageUrl = "https://drive.usercontent.google.com/download?id=1RQcRk8UjZkcbKe_8vmb3XfK-svR3QrNY&export=view&authuser=0",
                 name = "Sate Usus",
@@ -138,5 +119,4 @@ class AppDataSourceImpl: AppDataSource{
             )
         )
     }
-
 }

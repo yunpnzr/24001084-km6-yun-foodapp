@@ -1,4 +1,4 @@
-package com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.adapter
+package com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.presentation.home.adapter
 
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
