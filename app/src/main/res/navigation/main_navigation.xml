@@ -5,19 +5,28 @@
     android:id="@+id/main_navigation"
     app:startDestination="@+id/menu_tab_home">
 
-    <fragment
+0    <fragment
         android:id="@+id/menu_tab_home"
         android:name="com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.presentation.home.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
-    <fragment
-        android:id="@+id/menu_tab_cart"
-        android:name="com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.presentation.cart.CartFragment"
-        android:label="fragment_cart"
-        tools:layout="@layout/fragment_cart" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_menu_tab_home_to_detail_food_activity"
+            app:destination="@id/detail_food_activity" />
+    </fragment>
     <fragment
         android:id="@+id/menu_tab_profile"
         android:name="com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.presentation.profile.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
+    <activity
+        android:id="@+id/detail_food_activity"
+        android:name="com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.presentation.detailfood.DetailFoodActivity"
+        android:label="activity_detail_food"
+        tools:layout="@layout/activity_detail_food" />
+    <fragment
+        android:id="@+id/menu_tab_cart"
+        android:name="com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.presentation.cart.CartFragment"
+        android:label="fragment_cart"
+        tools:layout="@layout/fragment_cart" />
 </navigation>

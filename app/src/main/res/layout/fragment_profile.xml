@@ -55,12 +55,13 @@
                 android:drawableStart="@drawable/ic_tab_person"
                 android:drawablePadding="8dp"
                 android:ems="10"
-                android:background="@drawable/bg_custom_input"
+                android:background="@drawable/bg_selector_input"
                 android:hint="Masukkan nama anda"
+                android:text="Yunian Edwi Risnawaputra"
                 android:inputType="text"
                 android:padding="12dp"
                 android:textSize="14sp"
-                android:focusable="false"/>
+                android:enabled="false"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
@@ -92,12 +93,13 @@
                 android:drawableStart="@drawable/ic_key"
                 android:drawablePadding="8dp"
                 android:ems="10"
-                android:background="@drawable/bg_custom_input"
+                android:background="@drawable/bg_selector_input"
                 android:hint="*********"
+                android:text="admin123"
                 android:inputType="textPassword"
                 android:padding="8dp"
                 android:textSize="14sp"
-                android:focusable="false"/>
+                android:enabled="false"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
@@ -128,12 +130,13 @@
                 android:drawableStart="@drawable/ic_email"
                 android:drawablePadding="8dp"
                 android:ems="10"
-                android:background="@drawable/bg_custom_input"
+                android:background="@drawable/bg_selector_input"
                 android:hint="example@gmail.com"
+                android:text="yunianedwi01@gmail.com"
                 android:inputType="textEmailAddress"
                 android:padding="12dp"
                 android:textSize="14sp"
-                android:focusable="false"/>
+                android:enabled="false"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
@@ -164,15 +167,16 @@
                 android:id="@+id/et_telephone"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/bg_custom_input"
+                android:background="@drawable/bg_selector_input"
                 android:drawableStart="@drawable/ic_phone"
                 android:drawablePadding="8dp"
                 android:ems="10"
-                android:focusable="false"
                 android:hint="08xxxxxxxxxx"
+                android:text="085213762232"
                 android:inputType="phone"
                 android:padding="12dp"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                android:enabled="false"/>
         </com.google.android.material.textfield.TextInputLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

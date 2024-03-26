@@ -1,4 +1,5 @@
 [versions]
+kotlinParcelize = "1.9.0"
 agp = "8.3.1"
 kotlin = "1.9.0"
 coreKtx = "1.12.0"
@@ -49,4 +50,5 @@ hdodendof-circle-image-view = {group = "de.hdodenhof", name = "circleimageview",
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 jetbrainsKotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin"}
 

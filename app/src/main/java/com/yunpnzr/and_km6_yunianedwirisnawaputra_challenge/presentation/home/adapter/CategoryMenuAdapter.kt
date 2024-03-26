@@ -1,8 +1,10 @@
-package com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.adapter
+package com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.presentation.home.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
+import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.R
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.model.Category
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.databinding.ItemCategoryMenuBinding
 
@@ -24,7 +26,11 @@ class CategoryMenuAdapter: RecyclerView.Adapter<CategoryMenuAdapter.CategoryView
         private val binding: ItemCategoryMenuBinding
     ): RecyclerView.ViewHolder(binding.root){
         fun bind(item: Category){
-            binding.ivCategoryMenu.setImageResource(item.image)
+            //binding.ivCategoryMenu.setImageResource(item.imageUrl)
+            binding.ivCategoryMenu.load(item.imageUrl){
+                placeholder(R.drawable.img_loading_picture)
+                error(R.drawable.img_error)
+            }
             binding.tvCategoryMenu.text = item.name
         }
     }
