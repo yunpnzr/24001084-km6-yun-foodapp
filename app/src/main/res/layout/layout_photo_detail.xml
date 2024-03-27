@@ -22,11 +22,11 @@
 
         <ImageView
             android:id="@+id/back_detail"
-            android:layout_width="75dp"
-            android:layout_height="50dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:src="@drawable/ic_back"
-            android:layout_marginTop="8dp"
-            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"
             android:clickable="true"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

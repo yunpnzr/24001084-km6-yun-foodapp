@@ -11,13 +11,9 @@ class HomeViewModel(
     private val catalogRepository: CatalogRepository
 ): ViewModel() {
 
-    //private val dataSource: AppDataSource by lazy { AppDataSourceImpl() }
     private val _isUsingGridMode = MutableLiveData(false)
     val isUsingGridMode: LiveData<Boolean>
         get() = _isUsingGridMode
-
-    //fun getCategoryList() = dataSource.getCategoryDataSource()
-    //fun getCatalogList() = dataSource.getCatalogDataSource()
 
     fun getCatalogList() = catalogRepository.getCatalog()
     fun getCategoryList() = categoryRepository.getCategory()

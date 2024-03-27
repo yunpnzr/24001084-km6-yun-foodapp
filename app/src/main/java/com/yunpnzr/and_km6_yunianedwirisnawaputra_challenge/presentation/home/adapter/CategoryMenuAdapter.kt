@@ -26,7 +26,6 @@ class CategoryMenuAdapter: RecyclerView.Adapter<CategoryMenuAdapter.CategoryView
         private val binding: ItemCategoryMenuBinding
     ): RecyclerView.ViewHolder(binding.root){
         fun bind(item: Category){
-            //binding.ivCategoryMenu.setImageResource(item.imageUrl)
             binding.ivCategoryMenu.load(item.imageUrl){
                 placeholder(R.drawable.img_loading_picture)
                 error(R.drawable.img_error)

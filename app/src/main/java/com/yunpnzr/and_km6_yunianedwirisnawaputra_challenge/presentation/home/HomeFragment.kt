@@ -106,10 +106,10 @@ class HomeFragment : Fragment() {
 
         binding.layoutListCatalog.rvCatalog.apply {
             adapter = this@HomeFragment.catalogAdapter
-            if (usingListMode){
-                layoutManager = LinearLayoutManager(requireContext())
+            layoutManager = if (usingListMode){
+                LinearLayoutManager(requireContext())
             } else {
-                layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+                StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
             }
         }
         catalogAdapter?.submitData(viewModel.getCatalogList())
