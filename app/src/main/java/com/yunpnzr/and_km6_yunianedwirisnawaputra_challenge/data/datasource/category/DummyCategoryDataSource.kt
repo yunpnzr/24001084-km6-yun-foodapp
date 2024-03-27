@@ -6,7 +6,7 @@ class DummyCategoryDataSource: CategoryDataSource {
     override fun getCategoryDataSource(): List<Category> {
         return listOf(
             Category(
-                imageUrl = "https://github.com/yunpnzr/foodapp-asset/blob/main/category_img/img_drink.jpg?raw=true",
+                imageUrl = "https://raw.githubusercontent.com/yunpnzr/foodapp-asset/main/category_img/img_rice.webp",
                 name = "Nasi"
             ),
             Category(
@@ -14,11 +14,11 @@ class DummyCategoryDataSource: CategoryDataSource {
                 name = "Mie"
             ),
             Category(
-                imageUrl = "https://raw.githubusercontent.com/yunpnzr/foodapp-asset/main/category_img/img_rice.webp",
+                imageUrl = "https://github.com/yunpnzr/foodapp-asset/blob/main/category_img/img_snack.jpg?raw=true",
                 name = "Snack"
             ),
             Category(
-                imageUrl = "https://github.com/yunpnzr/foodapp-asset/blob/main/category_img/img_snack.jpg?raw=true",
+                imageUrl = "https://github.com/yunpnzr/foodapp-asset/blob/main/category_img/img_drink.jpg?raw=true",
                 name = "Minuman"
             )
         )
