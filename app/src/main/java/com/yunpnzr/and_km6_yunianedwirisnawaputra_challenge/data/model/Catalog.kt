@@ -6,7 +6,7 @@ import java.util.UUID
 
 @Parcelize
 data class Catalog(
-    var id: String = UUID.randomUUID().toString(),
+    var id: String? = UUID.randomUUID().toString(),
     var imageUrl: String,
     var name: String,
     var price: Double,
