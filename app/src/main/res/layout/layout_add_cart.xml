@@ -55,7 +55,7 @@
             tools:ignore="TouchTargetSizeCheck" />
 
         <Button
-            android:id="@+id/add_cart"
+            android:id="@+id/btn_add_cart"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="8dp"

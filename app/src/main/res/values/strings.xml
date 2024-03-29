@@ -14,4 +14,5 @@
     <string name="title_location">Lokasi</string>
     <string name="show_price_add_cart_button">Tambah ke keranjang - Rp.</string>
     <string name="error_data">Data error, tidak ditemukan</string>
+    <string name="empty_cart">Yah keranjang kamu kosong :(</string>
 </resources>

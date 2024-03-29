@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.jetbrainsKotlinAndroid)
     //alias(libs.plugins.kotlin.parcelize)
     id("kotlin-parcelize")
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -60,4 +61,9 @@ dependencies {
     implementation(libs.androidx.navigation.ui.ktx)
 
     implementation(libs.hdodendof.circle.image.view)
+
+    implementation(libs.room.ktx)
+    ksp(libs.room.compiler)
+    implementation(libs.coroutine.core)
+    implementation(libs.coroutine.android)
 }
