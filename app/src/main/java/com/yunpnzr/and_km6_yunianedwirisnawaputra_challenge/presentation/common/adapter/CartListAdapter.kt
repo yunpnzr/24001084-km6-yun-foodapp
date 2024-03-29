@@ -6,10 +6,12 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.base.CartViewHolder
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.base.ViewHolderBinder
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.model.Cart
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.databinding.ItemCartMenuBinding
+import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.databinding.ItemCheckoutMenuBinding
+import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.presentation.cart.adapter.CartOrderViewHolder
+import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.presentation.cart.adapter.CartViewHolder
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.presentation.common.CartListener
 
 class CartListAdapter(private val cartListener: CartListener? = null):
@@ -35,7 +37,11 @@ class CartListAdapter(private val cartListener: CartListener? = null):
             ItemCartMenuBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false
             ), cartListener
-        ) else TODO()
+        ) else CartOrderViewHolder(
+            ItemCheckoutMenuBinding.inflate(
+                LayoutInflater.from(parent.context), parent, false
+            )
+        )
     }
 
     override fun getItemCount(): Int {

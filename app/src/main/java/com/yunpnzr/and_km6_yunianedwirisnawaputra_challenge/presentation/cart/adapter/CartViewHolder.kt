@@ -1,7 +1,8 @@
-package com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.base
+package com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.presentation.cart.adapter
 
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.base.ViewHolderBinder
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.model.Cart
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.databinding.ItemCartMenuBinding
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.presentation.common.CartListener
