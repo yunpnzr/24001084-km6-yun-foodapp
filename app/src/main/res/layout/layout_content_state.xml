@@ -15,7 +15,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="Tidak ada data"
+        tools:text="@string/no_data"
         tools:visibility="visible" />
 
     <com.google.android.material.progressindicator.CircularProgressIndicator

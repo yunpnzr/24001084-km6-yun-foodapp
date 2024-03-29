@@ -62,7 +62,6 @@ class CartRepositoryImpl(private val cartDataSource: CartDataSource): CartReposi
     override fun getCheckoutData(): Flow<ResultWrapper<Triple<List<Cart>, List<PriceItem>, Double>>> {
         return cartDataSource.getAllCart()
             .map {
-                //mapping into cart list and sum the total price
                 proceed {
                     val result = it.toCartList()
                     val priceItemList =
@@ -71,7 +70,6 @@ class CartRepositoryImpl(private val cartDataSource: CartDataSource): CartReposi
                     Triple(result, priceItemList, totalPrice)
                 }
             }.map {
-                //map to check when list is empty
                 if (it.payload?.first?.isEmpty() == false) return@map it
                 ResultWrapper.Empty(it.payload)
             }.onStart {

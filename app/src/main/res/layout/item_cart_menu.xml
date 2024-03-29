@@ -125,7 +125,7 @@
                 android:background="@drawable/bg_selector_input"
                 android:drawablePadding="8dp"
                 android:ems="10"
-                android:hint="Pastikan tidak ada catatan pribadi ya!"
+                android:hint="@string/item_cart_hint"
                 android:inputType="text"
                 android:imeOptions="actionDone"
                 android:padding="12dp"
