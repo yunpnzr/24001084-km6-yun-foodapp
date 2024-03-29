@@ -94,7 +94,7 @@ class CartRepositoryImpl(private val cartDataSource: CartDataSource): CartReposi
 
     override fun increaseCart(item: Cart): Flow<ResultWrapper<Boolean>> {
         val modified = item.copy().apply {
-            itemQuantity -= 1
+            itemQuantity += 1
         }
         return proceedFlow {
             cartDataSource.updateCart(modified.toCartEntity()) > 0
