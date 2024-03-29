@@ -1,5 +1,6 @@
 package com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.presentation.cart
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,6 +16,7 @@ import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.repository.Cart
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.repository.CartRepositoryImpl
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.source.local.database.AppDatabase
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.databinding.FragmentCartBinding
+import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.presentation.checkout.CheckoutActivity
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.presentation.common.CartListener
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.presentation.common.adapter.CartListAdapter
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.utils.GenericViewModelFactory
@@ -71,7 +73,7 @@ class CartFragment : Fragment() {
 
     private fun setClickListeners() {
         binding.btnAddCheckout.setOnClickListener {
-
+            startActivity(Intent(requireContext(), CheckoutActivity::class.java))
         }
     }
 
