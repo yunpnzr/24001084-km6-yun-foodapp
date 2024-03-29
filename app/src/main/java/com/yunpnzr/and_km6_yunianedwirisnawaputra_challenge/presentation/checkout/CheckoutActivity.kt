@@ -27,10 +27,6 @@ class CheckoutActivity : AppCompatActivity() {
         ActivityCheckoutBinding.inflate(layoutInflater)
     }
 
-    /*private val dialogSuccessBinding: DialogCheckoutBinding by lazy {
-        DialogCheckoutBinding.inflate(this.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater)
-    }*/
-
     private val viewModel: CheckoutViewModel by viewModels {
         val database = AppDatabase.getDatabase(this)
         val dataSource: CartDataSource = CartDatabaseDataSource(database.cartDao())
@@ -71,17 +67,14 @@ class CheckoutActivity : AppCompatActivity() {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setCancelable(false)
         dialog.setContentView(dialogBinding.root)
-
         dialog.window?.setLayout(
             ViewGroup.LayoutParams.WRAP_CONTENT,
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
-
         dialogBinding.btnConfirm.setOnClickListener {
             dialog.dismiss()
             finish()
         }
-
         dialog.show()
     }
 
@@ -96,9 +89,9 @@ class CheckoutActivity : AppCompatActivity() {
                 binding.layoutState.root.isVisible = false
                 binding.layoutState.pbLoading.isVisible = false
                 binding.layoutState.tvErrorCart.isVisible = false
-                //binding.root.isVisible = true
                 binding.rvCart.isVisible = true
                 binding.cvButtonCheckout.isVisible = true
+                binding.btnCheckout.isEnabled = true
                 binding.layoutTopBarCheckout.root.isVisible = true
                 binding.cvDeliveryMethod.isVisible = true
                 binding.cvPayMethod.isVisible = true
@@ -112,9 +105,9 @@ class CheckoutActivity : AppCompatActivity() {
                 binding.layoutState.root.isVisible = true
                 binding.layoutState.pbLoading.isVisible = true
                 binding.layoutState.tvErrorCart.isVisible = false
-                //binding.root.isVisible = false
                 binding.rvCart.isVisible = false
                 binding.cvButtonCheckout.isVisible = true
+                binding.btnCheckout.isEnabled = false
                 binding.layoutTopBarCheckout.root.isVisible = true
                 binding.cvDeliveryMethod.isVisible = false
                 binding.cvPayMethod.isVisible = false
@@ -124,9 +117,9 @@ class CheckoutActivity : AppCompatActivity() {
                 binding.layoutState.pbLoading.isVisible = false
                 binding.layoutState.tvErrorCart.isVisible = true
                 binding.layoutState.tvErrorCart.text = result.exception?.message.orEmpty()
-                //binding.root.isVisible = false
                 binding.rvCart.isVisible = false
                 binding.cvButtonCheckout.isVisible = true
+                binding.btnCheckout.isEnabled = false
                 binding.layoutTopBarCheckout.root.isVisible = true
                 binding.cvDeliveryMethod.isVisible = false
                 binding.cvPayMethod.isVisible = false
@@ -139,10 +132,9 @@ class CheckoutActivity : AppCompatActivity() {
                 data.payload?.let { (_, _, totalPrice) ->
                     binding.tvTotalPriceCheckout.text = totalPrice.toIndonesianFormat()
                 }
-                //binding.root.isVisible = false
                 binding.rvCart.isVisible = false
                 binding.cvButtonCheckout.isVisible = true
-                binding.btnCheckout.isVisible = true
+                binding.btnCheckout.isEnabled = false
                 binding.layoutTopBarCheckout.root.isVisible = true
                 binding.cvDeliveryMethod.isVisible = false
                 binding.cvPayMethod.isVisible = false

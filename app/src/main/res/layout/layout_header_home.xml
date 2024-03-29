@@ -39,7 +39,7 @@
         app:layout_constraintEnd_toEndOf="@+id/tv_header_name"
         app:layout_constraintStart_toStartOf="@+id/tv_header_name"
         app:layout_constraintTop_toBottomOf="@+id/tv_header_name"
-        android:text="Mau makan apa?"
+        android:text="@string/home_greetings"
         android:textColor="@color/white"
         tools:text="Mau makan apa?" />
 

@@ -70,14 +70,14 @@ class DetailFoodActivity : AppCompatActivity() {
         viewModel.addToCart().observe(this){
             it.proceedWhen  (
                 doOnSuccess = {
-                    Toast.makeText(this, "Add cart success", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.add_cart_success), Toast.LENGTH_SHORT).show()
                     finish()
                 },
                 doOnError = {
-                    Toast.makeText(this, "Add cart failed", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.add_cart_failed), Toast.LENGTH_SHORT).show()
                 },
                 doOnLoading = {
-                    Toast.makeText(this, "Add cart loading", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.add_cart_loading), Toast.LENGTH_SHORT).show()
                 }
             )
         }
