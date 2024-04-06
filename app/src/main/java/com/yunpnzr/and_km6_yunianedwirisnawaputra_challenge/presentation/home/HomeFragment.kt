@@ -20,6 +20,7 @@ import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.repository.Cata
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.repository.CatalogRepositoryImpl
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.repository.CategoryRepository
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.repository.CategoryRepositoryImpl
+import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.source.local.pref.UserPreferenceImpl
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.databinding.FragmentHomeBinding
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.presentation.detailfood.DetailFoodActivity
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.presentation.home.adapter.CatalogMenuAdapter
@@ -35,7 +36,8 @@ class HomeFragment : Fragment() {
         val categoryRepository: CategoryRepository = CategoryRepositoryImpl(categoryDataSource)
         val catalogDataSource = DummyCatalogDataSource()
         val catalogRepository: CatalogRepository = CatalogRepositoryImpl(catalogDataSource)
-        GenericViewModelFactory.create(HomeViewModel(categoryRepository,catalogRepository))
+        val userPreference = UserPreferenceImpl(requireContext())
+        GenericViewModelFactory.create(HomeViewModel(categoryRepository,catalogRepository, userPreference))
     }
 
     private var catalogAdapter: CatalogMenuAdapter? = null
