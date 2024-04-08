@@ -3,9 +3,11 @@ package com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.presentation.home
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.repository.CatalogRepository
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.repository.CategoryRepository
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.source.local.pref.UserPreference
+import kotlinx.coroutines.Dispatchers
 
 class HomeViewModel(
     private val categoryRepository: CategoryRepository,
@@ -21,8 +23,9 @@ class HomeViewModel(
         _isUsingGridMode.value = userPreference.isUsingGridMode()
     }
 
-    fun getCatalogList() = catalogRepository.getCatalog()
-    fun getCategoryList() = categoryRepository.getCategory()
+    //fun getCatalogList() = catalogRepository.getCatalog()
+    fun getCatalogList(category: String? = null) = catalogRepository.getCatalog(category).asLiveData(Dispatchers.IO)
+    fun getCategoryList() = categoryRepository.getCategory().asLiveData(Dispatchers.IO)
 
     fun changeListMode(){
         val currentValue = _isUsingGridMode.value?:false

@@ -12,5 +12,5 @@ data class Catalog(
     var price: Double,
     var desc: String,
     var marketAddress: String,
-    var mapUrl: String
+    var mapUrl: String? = null
 ): Parcelable

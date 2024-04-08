@@ -1,7 +1,6 @@
 package com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.datasource.category
 
-import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.model.Category
-
+/*
 class DummyCategoryDataSource: CategoryDataSource {
     override fun getCategoryDataSource(): List<Category> {
         return listOf(
@@ -23,4 +22,4 @@ class DummyCategoryDataSource: CategoryDataSource {
             )
         )
     }
-}
+}*/

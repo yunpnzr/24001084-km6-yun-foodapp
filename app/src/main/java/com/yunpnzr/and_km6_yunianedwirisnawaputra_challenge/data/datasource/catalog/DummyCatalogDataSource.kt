@@ -1,7 +1,6 @@
 package com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.datasource.catalog
 
-import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.model.Catalog
-
+/*
 class DummyCatalogDataSource: CatalogDataSource {
     override fun getCatalogDataSource(): List<Catalog> {
         return listOf(
@@ -119,4 +118,4 @@ class DummyCatalogDataSource: CatalogDataSource {
             )
         )
     }
-}
+}*/

@@ -13,35 +13,47 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.R
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.base.OnItemClickedListener
-import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.datasource.catalog.DummyCatalogDataSource
-import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.datasource.category.DummyCategoryDataSource
+import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.datasource.catalog.CatalogApiDataSource
+import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.datasource.catalog.CatalogDataSource
+import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.datasource.category.CategoryApiDataSource
+import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.datasource.category.CategoryDataSource
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.model.Catalog
+import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.model.Category
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.repository.CatalogRepository
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.repository.CatalogRepositoryImpl
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.repository.CategoryRepository
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.repository.CategoryRepositoryImpl
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.source.local.pref.UserPreferenceImpl
+import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.source.network.service.ApiService
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.databinding.FragmentHomeBinding
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.presentation.detailfood.DetailFoodActivity
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.presentation.home.adapter.CatalogMenuAdapter
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.presentation.home.adapter.CategoryMenuAdapter
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.utils.GenericViewModelFactory
+import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.utils.proceedWhen
 
 class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
 
     private val viewModel: HomeViewModel by viewModels {
-        val categoryDataSource = DummyCategoryDataSource()
+        val service = ApiService.invoke()
+        //val categoryDataSource = DummyCategoryDataSource()
+        val categoryDataSource: CategoryDataSource = CategoryApiDataSource(service)
         val categoryRepository: CategoryRepository = CategoryRepositoryImpl(categoryDataSource)
-        val catalogDataSource = DummyCatalogDataSource()
+        //val catalogDataSource = DummyCatalogDataSource()
+        val catalogDataSource: CatalogDataSource = CatalogApiDataSource(service)
         val catalogRepository: CatalogRepository = CatalogRepositoryImpl(catalogDataSource)
         val userPreference = UserPreferenceImpl(requireContext())
         GenericViewModelFactory.create(HomeViewModel(categoryRepository,catalogRepository, userPreference))
     }
 
-    private var catalogAdapter: CatalogMenuAdapter? = null
-    private var categoryAdapter = CategoryMenuAdapter()
+    private lateinit var catalogAdapter: CatalogMenuAdapter
+    private val categoryAdapter: CategoryMenuAdapter by lazy {
+        CategoryMenuAdapter{
+            getCatalogData(it.name)
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -58,7 +70,34 @@ class HomeFragment : Fragment() {
         setClickCatalog()
         setSearchBar()
 
+        getCategoryData()
+        getCatalogData(null)
+
         observeListMode()
+    }
+
+    private fun getCategoryData(){
+        viewModel.getCategoryList().observe(viewLifecycleOwner){getCategory->
+            getCategory.proceedWhen(
+                doOnSuccess = {
+                    it.payload?.let {data ->
+                        setBindCategory(data)
+                    }
+                }
+            )
+        }
+    }
+
+    private fun getCatalogData(category: String? = null) {
+        viewModel.getCatalogList(category).observe(viewLifecycleOwner){getCatalog->
+            getCatalog.proceedWhen (
+                doOnSuccess = {
+                    it.payload?.let{data->
+                        setBindCatalog(data)
+                    }
+                }
+            )
+        }
     }
 
     private fun setSearchBar() {
@@ -114,7 +153,7 @@ class HomeFragment : Fragment() {
                 StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
             }
         }
-        catalogAdapter?.submitData(viewModel.getCatalogList())
+        //catalogAdapter?.submitData(viewModel.getCatalogList())
 
     }
 
@@ -131,7 +170,15 @@ class HomeFragment : Fragment() {
             adapter = this@HomeFragment.categoryAdapter
             layoutManager = GridLayoutManager(requireContext(), 4)
         }
-        categoryAdapter.submitDataCategory(viewModel.getCategoryList())
+        //categoryAdapter.submitDataCategory(viewModel.getCategoryList())
+    }
+
+    private fun setBindCategory(data: List<Category>){
+        categoryAdapter.submitDataCategory(data)
+    }
+
+    private fun setBindCatalog(data: List<Catalog>){
+        catalogAdapter.submitData(data)
     }
 
 }

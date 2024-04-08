@@ -1,5 +1,6 @@
 package com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.presentation.home.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -8,15 +9,19 @@ import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.R
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.model.Category
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.databinding.ItemCategoryMenuBinding
 
-class CategoryMenuAdapter: RecyclerView.Adapter<CategoryMenuAdapter.CategoryViewHolder>() {
+class CategoryMenuAdapter(
+    private val itemClick : (Category)->Unit
+): RecyclerView.Adapter<CategoryMenuAdapter.CategoryViewHolder>() {
 
     private val data = mutableListOf<Category>()
 
+    @SuppressLint("NotifyDataSetChanged")
     fun clear() {
         data.clear()
         notifyDataSetChanged()
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun submitDataCategory(items: List<Category>){
         data.addAll(items)
         notifyDataSetChanged()
@@ -26,11 +31,16 @@ class CategoryMenuAdapter: RecyclerView.Adapter<CategoryMenuAdapter.CategoryView
         private val binding: ItemCategoryMenuBinding
     ): RecyclerView.ViewHolder(binding.root){
         fun bind(item: Category){
-            binding.ivCategoryMenu.load(item.imageUrl){
-                placeholder(R.drawable.img_loading_picture)
-                error(R.drawable.img_error)
+            with(item){
+                binding.ivCategoryMenu.load(item.imageUrl){
+                    placeholder(R.drawable.img_loading_picture)
+                    error(R.drawable.img_error)
+                }
+                binding.tvCategoryMenu.text = item.name
+                itemView.setOnClickListener {
+                    itemClick(this)
+                }
             }
-            binding.tvCategoryMenu.text = item.name
         }
     }
 
