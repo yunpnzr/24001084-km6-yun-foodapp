@@ -71,7 +71,7 @@ class HomeFragment : Fragment() {
         setSearchBar()
 
         getCategoryData()
-        getCatalogData(null)
+        //getCatalogData(null)
 
         observeListMode()
     }
@@ -116,6 +116,7 @@ class HomeFragment : Fragment() {
         viewModel.isUsingGridMode.observe(viewLifecycleOwner){isUsingGridMode ->
             setGridOrList(isUsingGridMode)
             setListCatalog(isUsingGridMode)
+            getCatalogData(null)
         }
     }
 
