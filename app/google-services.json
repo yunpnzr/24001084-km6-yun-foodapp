@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "374154171242",
+    "project_id": "food-app-challenge",
+    "storage_bucket": "food-app-challenge.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:374154171242:android:1a7d1fe1056a906eb60b13",
+        "android_client_info": {
+          "package_name": "com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCibVVBxJb58dp3-pmLSGyHl5oo14ZQcBo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
