@@ -17,7 +17,14 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         setUpBottomNav()
+
+        //testCrash()
     }
+
+    //crashlytics ok
+    /*private fun testCrash() {
+        throw RuntimeException("Test Crash")
+    }*/
 
     private fun setUpBottomNav() {
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
