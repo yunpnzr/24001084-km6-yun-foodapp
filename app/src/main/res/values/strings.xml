@@ -46,4 +46,5 @@
     <string name="add_cart_failed">Add cart failed</string>
     <string name="add_cart_loading">Add cart loading</string>
     <string name="product_not_found">Product not found</string>
+    <string name="phone_input">08xxxxxxxxxx</string>
 </resources>
