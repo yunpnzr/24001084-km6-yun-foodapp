@@ -16,8 +16,10 @@ class HomeViewModel(
 ): ViewModel() {
 
     private val _isUsingGridMode = MutableLiveData(false)
-    val isUsingGridMode: LiveData<Boolean>
-        get() = _isUsingGridMode
+    val isUsingGridMode: LiveData<Boolean> = _isUsingGridMode
+
+    /*val isUsingGridMode: LiveData<Boolean>
+        get() = _isUsingGridMode*/
 
     init {
         _isUsingGridMode.value = userPreference.isUsingGridMode()
