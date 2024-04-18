@@ -45,7 +45,7 @@ class RegisterActivity : AppCompatActivity() {
             inputRegister()
         }
         binding.layoutInputRegister.tvHaveAccount.setOnClickListener{
-            navigateAuth()
+            navigateLogin()
         }
     }
 
@@ -68,6 +68,7 @@ class RegisterActivity : AppCompatActivity() {
                         getString(R.string.register_success),
                         Toast.LENGTH_SHORT
                     ).show()
+                    navigateLogin()
                 },
                 doOnLoading = {
                     binding.layoutInputRegister.pbRegister.isVisible = true
@@ -87,12 +88,12 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun navigateToMain() {
-        startActivity(Intent(this,MainActivity::class.java).apply {
+        startActivity(Intent(this, MainActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
         })
     }
 
-    private fun navigateAuth() {
+    private fun navigateLogin() {
         startActivity(Intent(this,LoginActivity::class.java).apply{
             flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
         })

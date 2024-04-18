@@ -1,5 +1,6 @@
 package com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.presentation.profile
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,12 +8,25 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.R
+import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.datasource.auth.AuthDataSource
+import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.datasource.auth.FirebaseAuthDataSource
+import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.repository.UserRepository
+import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.repository.UserRepositoryImpl
+import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.source.firebase.FirebaseServices
+import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.source.firebase.FirebaseServicesImpl
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.databinding.FragmentProfileBinding
+import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.presentation.auth.login.LoginActivity
+import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.utils.GenericViewModelFactory
 
 class ProfileFragment : Fragment() {
 
     private lateinit var binding: FragmentProfileBinding
-    private val viewModel: ProfileViewModel by viewModels()
+    private val viewModel: ProfileViewModel by viewModels{
+        val service: FirebaseServices = FirebaseServicesImpl()
+        val dataSource: AuthDataSource = FirebaseAuthDataSource(service)
+        val repository: UserRepository = UserRepositoryImpl(dataSource)
+        GenericViewModelFactory.create(ProfileViewModel(repository))
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -24,7 +38,7 @@ class ProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setClickEdit()
+        setClickListener()
         observeEditMode()
     }
 
@@ -59,9 +73,19 @@ class ProfileFragment : Fragment() {
         }
     }
 
-    private fun setClickEdit() {
+    private fun setClickListener() {
         binding.layoutTopBarProfile.ivEdit.setOnClickListener{
             viewModel.changeEditMode()
         }
+        binding.btnLogout.setOnClickListener {
+            viewModel.doLogout()
+            navigateToLogin()
+        }
+    }
+
+    private fun navigateToLogin() {
+        startActivity(Intent(requireContext(), LoginActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+        })
     }
 }

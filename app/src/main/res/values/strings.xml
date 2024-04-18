@@ -49,4 +49,6 @@
     <string name="phone_input">08xxxxxxxxxx</string>
     <string name="register_failed">Register gagal</string>
     <string name="register_success">Register berhasil</string>
+    <string name="login_success">Login sukses</string>
+    <string name="login_failed">Login gagal</string>
 </resources>
