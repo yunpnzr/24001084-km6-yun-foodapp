@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.ViewGroup
 import android.view.Window
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
@@ -13,13 +14,18 @@ import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.datasource.auth
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.datasource.auth.FirebaseAuthDataSource
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.datasource.cart.CartDataSource
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.datasource.cart.CartDatabaseDataSource
+import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.datasource.catalog.CatalogApiDataSource
+import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.datasource.catalog.CatalogDataSource
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.repository.CartRepository
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.repository.CartRepositoryImpl
+import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.repository.CatalogRepository
+import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.repository.CatalogRepositoryImpl
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.repository.UserRepository
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.repository.UserRepositoryImpl
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.source.firebase.FirebaseServices
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.source.firebase.FirebaseServicesImpl
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.source.local.database.AppDatabase
+import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.source.network.service.ApiService
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.databinding.ActivityCheckoutBinding
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.databinding.DialogCheckoutBinding
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.presentation.auth.login.LoginActivity
@@ -42,7 +48,10 @@ class CheckoutActivity : AppCompatActivity() {
         val database = AppDatabase.getDatabase(this)
         val dataSource: CartDataSource = CartDatabaseDataSource(database.cartDao())
         val cartRepository: CartRepository = CartRepositoryImpl(dataSource)
-        GenericViewModelFactory.create(CheckoutViewModel(cartRepository, firebaseRepository))
+        val apiService= ApiService.invoke()
+        val catalogDataSource: CatalogDataSource = CatalogApiDataSource(apiService)
+        val catalogRepository: CatalogRepository = CatalogRepositoryImpl(catalogDataSource)
+        GenericViewModelFactory.create(CheckoutViewModel(cartRepository, firebaseRepository, catalogRepository))
     }
 
     private val adapter: CartListAdapter by lazy {
@@ -68,11 +77,26 @@ class CheckoutActivity : AppCompatActivity() {
         }
         binding.btnCheckout.setOnClickListener {
             if (viewModel.isLoggedIn()){
-                viewModel.deleteAllCart()
-                showDialog()
+                /*viewModel.deleteAllCart()
+                showDialog()*/
+                observeCheckout()
             } else {
                 navigateToLogin()
             }
+        }
+    }
+
+    private fun observeCheckout() {
+        viewModel.checkoutCart().observe(this){
+            it.proceedWhen(
+                doOnSuccess = {
+                    viewModel.deleteAllCart()
+                    showDialog()
+                },
+                doOnError = {
+                    Toast.makeText(this,"Error", Toast.LENGTH_SHORT).show()
+                }
+            )
         }
     }
 

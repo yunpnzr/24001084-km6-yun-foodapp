@@ -26,7 +26,7 @@ interface ApiService {
     ):CatalogResponse
 
     @POST("order")
-    suspend fun checkoutRequest(
+    suspend fun createOrder(
         @Body checkoutRequest: CheckoutRequestResponse
     ): CheckoutResponse
 
