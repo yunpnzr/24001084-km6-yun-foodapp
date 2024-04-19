@@ -72,4 +72,6 @@
     <string name="btn_register_now">Daftar Sekarang!</string>
     <string name="have_account">Sudah memiliki akun sebelumnya?</string>
     <string name="lets_login">Yuk login!</string>
+    <string name="exit">Keluar</string>
+    <string name="check_email_change_password">Silahkan cek email</string>
 </resources>
