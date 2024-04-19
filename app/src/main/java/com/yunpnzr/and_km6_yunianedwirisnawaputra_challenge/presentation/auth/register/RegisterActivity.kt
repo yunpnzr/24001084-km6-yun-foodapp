@@ -2,10 +2,12 @@ package com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.presentation.auth.r
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Patterns
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
+import com.google.android.material.textfield.TextInputLayout
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.R
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.datasource.auth.AuthDataSource
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.datasource.auth.FirebaseAuthDataSource
@@ -50,11 +52,13 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun inputRegister() {
-        val name = binding.layoutInputRegister.etNameRegister.text.toString().trim()
-        val email = binding.layoutInputRegister.etEmailRegister.text.toString().trim()
-        val password = binding.layoutInputRegister.etPasswordRegister.text.toString().trim()
-        //val numberPhone = binding.layoutInputRegister.etTelephone.text.toString().trim()
-        doRegister(name, email, password)
+        if (isFormValid()){
+            val name = binding.layoutInputRegister.etNameRegister.text.toString().trim()
+            val email = binding.layoutInputRegister.etEmailRegister.text.toString().trim()
+            val password = binding.layoutInputRegister.etPasswordRegister.text.toString().trim()
+            //val numberPhone = binding.layoutInputRegister.etTelephone.text.toString().trim()
+            doRegister(name, email, password)
+        }
     }
 
     private fun doRegister(name: String, email: String, password: String) {
@@ -97,5 +101,74 @@ class RegisterActivity : AppCompatActivity() {
         startActivity(Intent(this,LoginActivity::class.java).apply{
             flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
         })
+    }
+
+    private fun isFormValid(): Boolean {
+        val name = binding.layoutInputRegister.etNameRegister.text.toString().trim()
+        val email = binding.layoutInputRegister.etEmailRegister.text.toString().trim()
+        val password = binding.layoutInputRegister.etPasswordRegister.text.toString().trim()
+        val confirmPassword = binding.layoutInputRegister.etPasswordConfirmRegister.text.toString().trim()
+
+        return checkNameValidation(name) &&
+                checkEmailValidation(email) &&
+                checkPasswordValidation(password, binding.layoutInputRegister.edPasswordRegister) &&
+                checkPasswordValidation(confirmPassword, binding.layoutInputRegister.edPasswordConfirmRegister) &&
+                checkPasswordAndConfirmPassword(password, confirmPassword)
+    }
+
+    private fun checkPasswordAndConfirmPassword(password: String, confirmPassword: String): Boolean {
+        return if (password != confirmPassword) {
+            binding.layoutInputRegister.edPasswordRegister.isErrorEnabled = true
+            binding.layoutInputRegister.edPasswordRegister.error =
+                getString(R.string.password_not_same)
+            binding.layoutInputRegister.edPasswordConfirmRegister.isErrorEnabled = true
+            binding.layoutInputRegister.edPasswordConfirmRegister.error = getString(R.string.password_not_same)
+            false
+        } else {
+            binding.layoutInputRegister.edPasswordRegister.isErrorEnabled = false
+            binding.layoutInputRegister.edPasswordConfirmRegister.isErrorEnabled = false
+            true
+        }
+    }
+
+    private fun checkPasswordValidation(password: String, edPasswordRegister: TextInputLayout): Boolean {
+        return if (password.isEmpty()) {
+            edPasswordRegister.isErrorEnabled = true
+            edPasswordRegister.error = getString(R.string.password_not_empty)
+            false
+        } else if (password.length < 8) {
+            edPasswordRegister.isErrorEnabled = true
+            edPasswordRegister.error = getString(R.string.password_under_character)
+            false
+        } else {
+            edPasswordRegister.isErrorEnabled = false
+            true
+        }
+    }
+
+    private fun checkEmailValidation(email: String): Boolean {
+        return if (email.isEmpty()) {
+            binding.layoutInputRegister.edEmailRegister.isErrorEnabled = true
+            binding.layoutInputRegister.edEmailRegister.error = getString(R.string.email_is_empty)
+            false
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            binding.layoutInputRegister.edEmailRegister.isErrorEnabled = true
+            binding.layoutInputRegister.edEmailRegister.error = getString(R.string.email_invalid)
+            false
+        } else {
+            binding.layoutInputRegister.edEmailRegister.isErrorEnabled = false
+            true
+        }
+    }
+
+    private fun checkNameValidation(name: String): Boolean {
+        return if (name.isEmpty()) {
+            binding.layoutInputRegister.edNameRegister.isErrorEnabled = true
+            binding.layoutInputRegister.edNameRegister.error = getString(R.string.name_is_empty)
+            false
+        } else {
+            binding.layoutInputRegister.edNameRegister.isErrorEnabled = false
+            true
+        }
     }
 }
