@@ -20,7 +20,6 @@ class FirebaseServicesImpl: FirebaseServices {
         name: String,
         email: String,
         password: String,
-        phoneNumber: String,
     ): Boolean {
         val registerResult = firebaseAuth.createUserWithEmailAndPassword(email, password).await()
         //verifyPhoneNumber(phoneNumber)

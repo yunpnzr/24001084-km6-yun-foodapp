@@ -14,7 +14,6 @@ interface AuthDataSource {
         name: String,
         email: String,
         password: String,
-        phoneNumber: String
     ): Boolean
 
     suspend fun updateProfile(name: String? = null): Boolean

@@ -40,19 +40,28 @@ class ProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setClickListener()
         observeEditMode()
+
+        showUserData()
+    }
+
+    private fun showUserData() {
+        viewModel.getCurrentUser()?.let {
+            binding.etName.setText(it.name)
+            binding.etEmail.setText(it.email)
+        }
     }
 
     private fun setEditEnabledOrDisabled(isEnabledOrDisabledEdit: Boolean) {
         if(!isEnabledOrDisabledEdit){
             binding.etName.isEnabled = false
-            binding.etEmail.isEnabled = false
-            binding.etPassword.isEnabled = false
-            binding.etTelephone.isEnabled = false
+            //binding.etEmail.isEnabled = false
+            //binding.etPassword.isEnabled = false
+            //binding.etTelephone.isEnabled = false
         } else {
             binding.etName.isEnabled = true
-            binding.etEmail.isEnabled = true
-            binding.etPassword.isEnabled = true
-            binding.etTelephone.isEnabled = true
+            //binding.etEmail.isEnabled = true
+            //binding.etPassword.isEnabled = true
+            //binding.etTelephone.isEnabled = true
         }
     }
 

@@ -53,12 +53,12 @@ class RegisterActivity : AppCompatActivity() {
         val name = binding.layoutInputRegister.etNameRegister.text.toString().trim()
         val email = binding.layoutInputRegister.etEmailRegister.text.toString().trim()
         val password = binding.layoutInputRegister.etPasswordRegister.text.toString().trim()
-        val numberPhone = binding.layoutInputRegister.etTelephone.text.toString().trim()
-        doRegister(name, email, password, numberPhone)
+        //val numberPhone = binding.layoutInputRegister.etTelephone.text.toString().trim()
+        doRegister(name, email, password)
     }
 
-    private fun doRegister(name: String, email: String, password: String, numberPhone: String) {
-        viewModel.doRegister(name, email, password, numberPhone).observe(this){ result->
+    private fun doRegister(name: String, email: String, password: String) {
+        viewModel.doRegister(name, email, password).observe(this){ result->
             result.proceedWhen (
                 doOnSuccess = {
                     binding.layoutInputRegister.pbRegister.isVisible = false

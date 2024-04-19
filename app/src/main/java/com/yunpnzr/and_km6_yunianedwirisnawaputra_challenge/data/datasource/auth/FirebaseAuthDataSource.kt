@@ -13,9 +13,8 @@ class FirebaseAuthDataSource(private val service: FirebaseServices): AuthDataSou
         name: String,
         email: String,
         password: String,
-        phoneNumber: String,
     ): Boolean {
-        return service.doRegister(name, email, password, phoneNumber)
+        return service.doRegister(name, email, password)
     }
 
     override suspend fun updateProfile(name: String?): Boolean {

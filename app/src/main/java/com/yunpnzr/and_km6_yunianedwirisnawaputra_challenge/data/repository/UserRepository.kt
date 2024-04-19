@@ -17,8 +17,7 @@ interface UserRepository{
     fun doRegister(
         name: String,
         email: String,
-        password: String,
-        phoneNumber: String
+        password: String
     ): Flow<ResultWrapper<Boolean>>
 
     fun updateProfile(name: String? = null): Flow<ResultWrapper<Boolean>>
@@ -39,9 +38,8 @@ class UserRepositoryImpl(private val dataSource: AuthDataSource): UserRepository
         name: String,
         email: String,
         password: String,
-        phoneNumber: String,
     ): Flow<ResultWrapper<Boolean>> {
-        return proceedFlow { dataSource.doRegister(name, email, password, phoneNumber) }
+        return proceedFlow { dataSource.doRegister(name, email, password) }
     }
 
     override fun updateProfile(name: String?): Flow<ResultWrapper<Boolean>> {

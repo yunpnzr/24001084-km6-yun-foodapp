@@ -59,7 +59,7 @@ class LoginActivity : AppCompatActivity() {
             result.proceedWhen(
                 doOnSuccess = {
                     binding.layoutInputLogin.pbLogin.isVisible = false
-                    binding.layoutInputLogin.pbLogin.isEnabled = true
+                    binding.layoutInputLogin.btnLogin.isEnabled = true
                     Toast.makeText(
                         this,
                         getString(R.string.login_success),
@@ -69,11 +69,11 @@ class LoginActivity : AppCompatActivity() {
                 },
                 doOnLoading = {
                     binding.layoutInputLogin.pbLogin.isVisible = true
-                    binding.layoutInputLogin.pbLogin.isEnabled = false
+                    binding.layoutInputLogin.btnLogin.isEnabled = false
                 },
                 doOnError = {
                     binding.layoutInputLogin.pbLogin.isVisible = false
-                    binding.layoutInputLogin.pbLogin.isEnabled = true
+                    binding.layoutInputLogin.btnLogin.isEnabled = true
                     Toast.makeText(
                         this,
                         getString(R.string.login_failed),

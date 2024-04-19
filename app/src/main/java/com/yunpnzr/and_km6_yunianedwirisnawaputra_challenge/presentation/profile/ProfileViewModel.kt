@@ -3,6 +3,7 @@ package com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.presentation.profil
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.model.User
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.repository.UserRepository
 
 class ProfileViewModel(private val repository: UserRepository): ViewModel() {
@@ -13,6 +14,10 @@ class ProfileViewModel(private val repository: UserRepository): ViewModel() {
     fun changeEditMode(){
         val currentValue = isEnableOrDisableEdit.value?: false
         _isEnableOrDisableEdit.postValue(!currentValue)
+    }
+
+    fun getCurrentUser(): User? {
+        return repository.getCurrentUser()
     }
 
     fun doLogout(): Boolean {
