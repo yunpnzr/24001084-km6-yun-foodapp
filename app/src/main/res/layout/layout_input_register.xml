@@ -160,42 +160,6 @@
             android:enabled="true"/>
     </com.google.android.material.textfield.TextInputLayout>
 
-    <TextView
-        android:id="@+id/tv_title_phone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/title_telephone_number_input_profile"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ed_password_confirm_register" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/ed_telephone"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="32dp"
-        android:layout_marginTop="8dp"
-        app:hintEnabled="false"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_title_phone">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/et_telephone"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/bg_selector_input"
-            android:drawableStart="@drawable/ic_phone"
-            android:drawablePadding="8dp"
-            android:ems="10"
-            android:hint="@string/phone_input"
-            android:inputType="phone"
-            android:padding="12dp"
-            android:textSize="14sp"
-            android:enabled="true"/>
-    </com.google.android.material.textfield.TextInputLayout>
-
     <Button
         android:id="@+id/btn_register"
         android:layout_width="0dp"
@@ -205,7 +169,7 @@
         android:text="Daftar Sekarang!"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ed_telephone" />
+        app:layout_constraintTop_toBottomOf="@+id/ed_password_confirm_register" />
 
     <LinearLayout
         android:layout_width="wrap_content"

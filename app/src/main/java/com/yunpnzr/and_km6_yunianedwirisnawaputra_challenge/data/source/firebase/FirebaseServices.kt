@@ -14,8 +14,7 @@ interface FirebaseServices {
     suspend fun doRegister(
         name: String,
         email: String,
-        password: String,
-        phoneNumber: String
+        password: String
     ): Boolean
 
     suspend fun updateProfile(name: String? = null): Boolean
