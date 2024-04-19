@@ -3,8 +3,11 @@ package com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.presentation.profil
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.model.User
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.repository.UserRepository
+import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.utils.ResultWrapper
+import kotlinx.coroutines.Dispatchers
 
 class ProfileViewModel(private val repository: UserRepository): ViewModel() {
     private val _isEnableOrDisableEdit = MutableLiveData(false)
@@ -18,6 +21,14 @@ class ProfileViewModel(private val repository: UserRepository): ViewModel() {
 
     fun getCurrentUser(): User? {
         return repository.getCurrentUser()
+    }
+
+    fun doChangeProfile(name: String): LiveData<ResultWrapper<Boolean>> {
+        return repository.updateProfile(name).asLiveData(Dispatchers.IO)
+    }
+
+    fun doChangePassword(password: String): LiveData<ResultWrapper<Boolean>>{
+        return repository.updatePassword(password).asLiveData(Dispatchers.IO)
     }
 
     fun doLogout(): Boolean {

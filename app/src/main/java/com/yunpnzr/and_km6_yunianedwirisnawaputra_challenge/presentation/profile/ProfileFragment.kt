@@ -5,7 +5,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.R
@@ -18,6 +20,7 @@ import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.source.firebase
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.databinding.FragmentProfileBinding
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.presentation.auth.login.LoginActivity
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.utils.GenericViewModelFactory
+import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.utils.proceedWhen
 
 class ProfileFragment : Fragment() {
 
@@ -55,14 +58,10 @@ class ProfileFragment : Fragment() {
     private fun setEditEnabledOrDisabled(isEnabledOrDisabledEdit: Boolean) {
         if(!isEnabledOrDisabledEdit){
             binding.etName.isEnabled = false
-            //binding.etEmail.isEnabled = false
-            //binding.etPassword.isEnabled = false
-            //binding.etTelephone.isEnabled = false
+            binding.etPassword.isEnabled = false
         } else {
             binding.etName.isEnabled = true
-            //binding.etEmail.isEnabled = true
-            //binding.etPassword.isEnabled = true
-            //binding.etTelephone.isEnabled = true
+            binding.etPassword.isEnabled = true
         }
     }
 
@@ -86,11 +85,49 @@ class ProfileFragment : Fragment() {
     private fun setClickListener() {
         binding.layoutTopBarProfile.ivEdit.setOnClickListener{
             viewModel.changeEditMode()
+
+            val newName = binding.etName.text.toString()
+            val newPassword = binding.etPassword.text.toString()
+
+            if (viewModel.isEnableOrDisableEdit.value == true) {
+                if (newName.isNotEmpty()) {
+                    viewModel.doChangeProfile(newName).observe(viewLifecycleOwner) { result ->
+                        result.proceedWhen(
+                            doOnSuccess = {
+                                binding.pbProfile.isVisible = false
+                                Toast.makeText(requireContext(), "Ganti nama sukses", Toast.LENGTH_SHORT).show()
+                            },
+                            doOnLoading = {
+                                binding.pbProfile.isVisible = true
+                            },
+                            doOnError = {
+                                binding.pbProfile.isVisible = false
+                                Toast.makeText(requireContext(), "Ganti nama gagal", Toast.LENGTH_SHORT).show()
+                            }
+                        )
+                    }
+                }
+                if (newPassword.isNotEmpty()) {
+                    viewModel.doChangePassword(newPassword).observe(viewLifecycleOwner) { result ->
+                        result.proceedWhen(
+                            doOnSuccess = {
+                                binding.pbProfile.isVisible = false
+                                Toast.makeText(requireContext(), "Ganti password sukses", Toast.LENGTH_SHORT).show()
+                            },
+                            doOnLoading = {
+                                binding.pbProfile.isVisible = true
+                            },
+                            doOnError = {
+                                binding.pbProfile.isVisible = false
+                                Toast.makeText(requireContext(), "Ganti password gagal", Toast.LENGTH_SHORT).show()
+                            }
+                        )
+                    }
+                }
+            }
         }
         binding.btnLogout.setOnClickListener {
             doLogout()
-            //viewModel.doLogout()
-            //navigateToLogin()
         }
     }
 
