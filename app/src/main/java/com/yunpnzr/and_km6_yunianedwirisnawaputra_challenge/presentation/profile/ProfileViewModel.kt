@@ -31,6 +31,10 @@ class ProfileViewModel(private val repository: UserRepository): ViewModel() {
         return repository.updatePassword(password).asLiveData(Dispatchers.IO)
     }
 
+    fun doChangePasswordByEmail(): Boolean {
+        return repository.requestChangePasswordByEmail()
+    }
+
     fun doLogout(): Boolean {
         return repository.doLogout()
     }

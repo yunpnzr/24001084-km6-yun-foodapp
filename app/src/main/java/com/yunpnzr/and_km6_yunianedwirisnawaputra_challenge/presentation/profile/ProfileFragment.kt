@@ -58,10 +58,10 @@ class ProfileFragment : Fragment() {
     private fun setEditEnabledOrDisabled(isEnabledOrDisabledEdit: Boolean) {
         if(!isEnabledOrDisabledEdit){
             binding.etName.isEnabled = false
-            binding.etPassword.isEnabled = false
+            //binding.etPassword.isEnabled = false
         } else {
             binding.etName.isEnabled = true
-            binding.etPassword.isEnabled = true
+            //binding.etPassword.isEnabled = true
         }
     }
 
@@ -87,52 +87,46 @@ class ProfileFragment : Fragment() {
             viewModel.changeEditMode()
 
             val newName = binding.etName.text.toString()
-            val newPassword = binding.etPassword.text.toString()
 
             if (viewModel.isEnableOrDisableEdit.value == true) {
-                if (newName.isNotEmpty()) {
-                    viewModel.doChangeProfile(newName).observe(viewLifecycleOwner) { result ->
-                        result.proceedWhen(
-                            doOnSuccess = {
-                                binding.pbProfile.isVisible = false
-                                Toast.makeText(requireContext(),
-                                    getString(R.string.change_name_success), Toast.LENGTH_SHORT).show()
-                            },
-                            doOnLoading = {
-                                binding.pbProfile.isVisible = true
-                            },
-                            doOnError = {
-                                binding.pbProfile.isVisible = false
-                                Toast.makeText(requireContext(),
-                                    getString(R.string.change_name_failed), Toast.LENGTH_SHORT).show()
-                            }
-                        )
-                    }
-                }
-                if (newPassword.isNotEmpty()) {
-                    viewModel.doChangePassword(newPassword).observe(viewLifecycleOwner) { result ->
-                        result.proceedWhen(
-                            doOnSuccess = {
-                                binding.pbProfile.isVisible = false
-                                Toast.makeText(requireContext(),
-                                    getString(R.string.change_password_success), Toast.LENGTH_SHORT).show()
-                            },
-                            doOnLoading = {
-                                binding.pbProfile.isVisible = true
-                            },
-                            doOnError = {
-                                binding.pbProfile.isVisible = false
-                                Toast.makeText(requireContext(),
-                                    getString(R.string.change_password_failed), Toast.LENGTH_SHORT).show()
-                            }
-                        )
-                    }
+                viewModel.doChangeProfile(newName).observe(viewLifecycleOwner) { result ->
+                    result.proceedWhen(
+                        doOnSuccess = {
+                            binding.pbProfile.isVisible = false
+                            Toast.makeText(requireContext(),
+                                getString(R.string.change_name_success), Toast.LENGTH_SHORT).show()
+                        },
+                        doOnLoading = {
+                            binding.pbProfile.isVisible = true
+                        },
+                        doOnError = {
+                            binding.pbProfile.isVisible = false
+                            Toast.makeText(requireContext(),
+                                getString(R.string.change_name_failed), Toast.LENGTH_SHORT).show()
+                        }
+                    )
                 }
             }
         }
+
+        binding.tvChangePassword.setOnClickListener{
+            viewModel.doChangePasswordByEmail()
+            changePasswordDialog()
+        }
+
         binding.btnLogout.setOnClickListener {
             doLogout()
         }
+    }
+
+    private fun changePasswordDialog() {
+        val dialog = AlertDialog.Builder(requireContext()).setMessage(getString(R.string.check_email_change_password))
+            .setPositiveButton(getString(R.string.yes)
+            ){ dialog, id ->
+                viewModel.doLogout()
+                navigateToLogin()
+            }.create()
+        dialog.show()
     }
 
     private fun doLogout() {
