@@ -10,7 +10,7 @@
         android:id="@+id/tv_title_register"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Daftar dulu yuk!"
+        android:text="@string/header_register"
         android:textSize="24sp"
         android:textStyle="bold"
         android:layout_marginTop="32dp"
@@ -166,7 +166,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="32dp"
         android:layout_marginTop="32dp"
-        android:text="Daftar Sekarang!"
+        android:text="@string/btn_register_now"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ed_password_confirm_register" />
@@ -185,14 +185,14 @@
             android:id="@+id/tv_have_account_quest"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Sudah memiliki akun sebelumnya?" />
+            android:text="@string/have_account" />
 
         <TextView
             android:id="@+id/tv_have_account"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
-            android:text="Yuk login!"
+            android:text="@string/lets_login"
             android:textColor="?attr/colorPrimary" />
 
     </LinearLayout>

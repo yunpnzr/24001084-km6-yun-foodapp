@@ -10,7 +10,7 @@
         android:id="@+id/tv_title_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Welcome back!"
+        android:text="@string/header_login"
         android:textSize="24sp"
         android:textStyle="bold"
         android:layout_marginTop="32dp"
@@ -47,7 +47,6 @@
             android:ems="10"
             android:background="@drawable/bg_selector_input"
             android:hint="@string/email_hint"
-            android:text="@string/email"
             android:inputType="textEmailAddress"
             android:padding="12dp"
             android:textSize="14sp"
@@ -84,7 +83,6 @@
             android:ems="10"
             android:background="@drawable/bg_selector_input"
             android:hint="@string/password_hint"
-            android:text="@string/password"
             android:inputType="textPassword"
             android:padding="8dp"
             android:textSize="14sp"
@@ -105,14 +103,14 @@
             android:id="@+id/tv_not_have_account_quest"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Belum memiliki akun?" />
+            android:text="@string/not_have_account" />
 
         <TextView
             android:id="@+id/tv_not_have_account_register"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
-            android:text="Daftar sekarang"
+            android:text="@string/register_now"
             android:textColor="?attr/colorPrimary" />
 
     </LinearLayout>
@@ -123,7 +121,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="32dp"
         android:layout_marginTop="64dp"
-        android:text="Masuk"
+        android:text="@string/login"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ed_password" />

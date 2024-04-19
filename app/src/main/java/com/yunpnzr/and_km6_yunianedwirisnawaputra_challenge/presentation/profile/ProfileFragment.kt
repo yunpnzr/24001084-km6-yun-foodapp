@@ -95,14 +95,16 @@ class ProfileFragment : Fragment() {
                         result.proceedWhen(
                             doOnSuccess = {
                                 binding.pbProfile.isVisible = false
-                                Toast.makeText(requireContext(), "Ganti nama sukses", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(requireContext(),
+                                    getString(R.string.change_name_success), Toast.LENGTH_SHORT).show()
                             },
                             doOnLoading = {
                                 binding.pbProfile.isVisible = true
                             },
                             doOnError = {
                                 binding.pbProfile.isVisible = false
-                                Toast.makeText(requireContext(), "Ganti nama gagal", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(requireContext(),
+                                    getString(R.string.change_name_failed), Toast.LENGTH_SHORT).show()
                             }
                         )
                     }
@@ -112,14 +114,16 @@ class ProfileFragment : Fragment() {
                         result.proceedWhen(
                             doOnSuccess = {
                                 binding.pbProfile.isVisible = false
-                                Toast.makeText(requireContext(), "Ganti password sukses", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(requireContext(),
+                                    getString(R.string.change_password_success), Toast.LENGTH_SHORT).show()
                             },
                             doOnLoading = {
                                 binding.pbProfile.isVisible = true
                             },
                             doOnError = {
                                 binding.pbProfile.isVisible = false
-                                Toast.makeText(requireContext(), "Ganti password gagal", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(requireContext(),
+                                    getString(R.string.change_password_failed), Toast.LENGTH_SHORT).show()
                             }
                         )
                     }
