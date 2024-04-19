@@ -60,4 +60,16 @@
     <string name="validate_logout">Yakin mau logout?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="change_name_success">Ganti nama sukses</string>
+    <string name="change_name_failed">Ganti nama gagal</string>
+    <string name="change_password_success">Ganti password sukses</string>
+    <string name="change_password_failed">Ganti password gagal</string>
+    <string name="login">Masuk</string>
+    <string name="register_now">Daftar sekarang</string>
+    <string name="not_have_account">Belum memiliki akun?</string>
+    <string name="header_login">Welcome back!</string>
+    <string name="header_register">Daftar dulu yuk!</string>
+    <string name="btn_register_now">Daftar Sekarang!</string>
+    <string name="have_account">Sudah memiliki akun sebelumnya?</string>
+    <string name="lets_login">Yuk login!</string>
 </resources>
