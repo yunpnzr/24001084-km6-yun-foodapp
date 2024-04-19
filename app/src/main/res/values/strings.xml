@@ -51,4 +51,13 @@
     <string name="register_success">Register berhasil</string>
     <string name="login_success">Login sukses</string>
     <string name="login_failed">Login gagal</string>
+    <string name="password_not_same">Password tidak sama</string>
+    <string name="password_not_empty">Password harus diisi</string>
+    <string name="password_under_character">Password kurang dari 8 karakter</string>
+    <string name="email_is_empty">Email belum diisi</string>
+    <string name="email_invalid">Email invalid</string>
+    <string name="name_is_empty">Nama belum diisi</string>
+    <string name="validate_logout">Yakin mau logout?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 </resources>

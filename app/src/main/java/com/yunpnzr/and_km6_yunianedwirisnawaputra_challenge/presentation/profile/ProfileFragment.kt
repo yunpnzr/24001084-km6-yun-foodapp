@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.R
@@ -87,9 +88,26 @@ class ProfileFragment : Fragment() {
             viewModel.changeEditMode()
         }
         binding.btnLogout.setOnClickListener {
-            viewModel.doLogout()
-            navigateToLogin()
+            doLogout()
+            //viewModel.doLogout()
+            //navigateToLogin()
         }
+    }
+
+    private fun doLogout() {
+        val dialog = AlertDialog.Builder(requireContext()).setMessage(getString(R.string.validate_logout))
+            .setPositiveButton(
+                getString(R.string.yes)
+            ) { dialog, id ->
+                viewModel.doLogout()
+                navigateToLogin()
+            }
+            .setNegativeButton(
+                getString(R.string.no)
+            ) { dialog, id ->
+
+            }.create()
+        dialog.show()
     }
 
     private fun navigateToLogin() {
