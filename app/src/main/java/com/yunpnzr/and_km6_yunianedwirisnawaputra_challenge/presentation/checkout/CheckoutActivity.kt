@@ -1,6 +1,7 @@
 package com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.presentation.checkout
 
 import android.app.Dialog
+import android.content.Intent
 import android.os.Bundle
 import android.view.ViewGroup
 import android.view.Window
@@ -8,13 +9,20 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.R
+import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.datasource.auth.AuthDataSource
+import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.datasource.auth.FirebaseAuthDataSource
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.datasource.cart.CartDataSource
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.datasource.cart.CartDatabaseDataSource
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.repository.CartRepository
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.repository.CartRepositoryImpl
+import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.repository.UserRepository
+import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.repository.UserRepositoryImpl
+import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.source.firebase.FirebaseServices
+import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.source.firebase.FirebaseServicesImpl
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.source.local.database.AppDatabase
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.databinding.ActivityCheckoutBinding
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.databinding.DialogCheckoutBinding
+import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.presentation.auth.login.LoginActivity
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.presentation.checkout.adapter.PriceListAdapter
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.presentation.common.adapter.CartListAdapter
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.utils.GenericViewModelFactory
@@ -28,10 +36,13 @@ class CheckoutActivity : AppCompatActivity() {
     }
 
     private val viewModel: CheckoutViewModel by viewModels {
+        val service: FirebaseServices = FirebaseServicesImpl()
+        val firebaseDataSource: AuthDataSource = FirebaseAuthDataSource(service)
+        val firebaseRepository: UserRepository = UserRepositoryImpl(firebaseDataSource)
         val database = AppDatabase.getDatabase(this)
         val dataSource: CartDataSource = CartDatabaseDataSource(database.cartDao())
-        val repository: CartRepository = CartRepositoryImpl(dataSource)
-        GenericViewModelFactory.create(CheckoutViewModel(repository))
+        val cartRepository: CartRepository = CartRepositoryImpl(dataSource)
+        GenericViewModelFactory.create(CheckoutViewModel(cartRepository, firebaseRepository))
     }
 
     private val adapter: CartListAdapter by lazy {
@@ -56,9 +67,17 @@ class CheckoutActivity : AppCompatActivity() {
             onBackPressed()
         }
         binding.btnCheckout.setOnClickListener {
-            viewModel.deleteAllCart()
-            showDialog()
+            if (viewModel.isLoggedIn()){
+                viewModel.deleteAllCart()
+                showDialog()
+            } else {
+                navigateToLogin()
+            }
         }
+    }
+
+    private fun navigateToLogin() {
+        startActivity(Intent(this, LoginActivity::class.java))
     }
 
     private fun showDialog(){

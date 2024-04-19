@@ -3,8 +3,9 @@ package com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.presentation.profil
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.repository.UserRepository
 
-class ProfileViewModel: ViewModel() {
+class ProfileViewModel(private val repository: UserRepository): ViewModel() {
     private val _isEnableOrDisableEdit = MutableLiveData(false)
     val isEnableOrDisableEdit: LiveData<Boolean>
         get() = _isEnableOrDisableEdit
@@ -12,5 +13,9 @@ class ProfileViewModel: ViewModel() {
     fun changeEditMode(){
         val currentValue = isEnableOrDisableEdit.value?: false
         _isEnableOrDisableEdit.postValue(!currentValue)
+    }
+
+    fun doLogout(): Boolean {
+        return repository.doLogout()
     }
 }

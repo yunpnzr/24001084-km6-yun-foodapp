@@ -23,6 +23,7 @@ class FirebaseServicesImpl: FirebaseServices {
         phoneNumber: String,
     ): Boolean {
         val registerResult = firebaseAuth.createUserWithEmailAndPassword(email, password).await()
+        //verifyPhoneNumber(phoneNumber)
         registerResult.user?.updateProfile(
             userProfileChangeRequest {
                 displayName = name

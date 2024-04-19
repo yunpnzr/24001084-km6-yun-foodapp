@@ -17,12 +17,17 @@ import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.datasource.cata
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.datasource.catalog.CatalogDataSource
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.datasource.category.CategoryApiDataSource
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.datasource.category.CategoryDataSource
+import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.datasource.pref.PrefDataSource
+import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.datasource.pref.PrefDataSourceImpl
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.model.Catalog
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.model.Category
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.repository.CatalogRepository
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.repository.CatalogRepositoryImpl
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.repository.CategoryRepository
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.repository.CategoryRepositoryImpl
+import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.repository.PrefRepository
+import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.repository.PrefRepositoryImpl
+import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.source.local.pref.UserPreference
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.source.local.pref.UserPreferenceImpl
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.source.network.service.ApiService
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.databinding.FragmentHomeBinding
@@ -38,14 +43,15 @@ class HomeFragment : Fragment() {
 
     private val viewModel: HomeViewModel by viewModels {
         val service = ApiService.invoke()
-        //val categoryDataSource = DummyCategoryDataSource()
         val categoryDataSource: CategoryDataSource = CategoryApiDataSource(service)
         val categoryRepository: CategoryRepository = CategoryRepositoryImpl(categoryDataSource)
-        //val catalogDataSource = DummyCatalogDataSource()
         val catalogDataSource: CatalogDataSource = CatalogApiDataSource(service)
         val catalogRepository: CatalogRepository = CatalogRepositoryImpl(catalogDataSource)
-        val userPreference = UserPreferenceImpl(requireContext())
-        GenericViewModelFactory.create(HomeViewModel(categoryRepository,catalogRepository, userPreference))
+        //val userPreference = UserPreferenceImpl(requireContext())
+        val userPreference: UserPreference = UserPreferenceImpl(requireContext())
+        val userDataSource: PrefDataSource = PrefDataSourceImpl(userPreference)
+        val userRepository: PrefRepository = PrefRepositoryImpl(userDataSource)
+        GenericViewModelFactory.create(HomeViewModel(categoryRepository, catalogRepository, userRepository))
     }
 
     private lateinit var catalogAdapter: CatalogMenuAdapter
@@ -65,15 +71,15 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setSearchBar()
 
         setListCategoryMenu()
-        setClickCatalog()
-        setSearchBar()
+        setModeCatalog()
+        observeListMode()
 
         getCategoryData()
         //getCatalogData(null)
 
-        observeListMode()
     }
 
     private fun getCategoryData(){
@@ -106,17 +112,20 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun setClickCatalog() {
+    private fun setModeCatalog() {
         binding.layoutListCatalog.ivModeCatalog.setOnClickListener{
             viewModel.changeListMode()
+            /*viewModel.setUsingGridMode(!viewModel.isUsingGridMode())
+            setGridOrList(!viewModel.isUsingGridMode())
+            setListCatalog(!viewModel.isUsingGridMode())*/
         }
     }
 
     private fun observeListMode(){
         viewModel.isUsingGridMode.observe(viewLifecycleOwner){isUsingGridMode ->
+            getCatalogData(null)
             setGridOrList(isUsingGridMode)
             setListCatalog(isUsingGridMode)
-            getCatalogData(null)
         }
     }
 
@@ -154,7 +163,6 @@ class HomeFragment : Fragment() {
                 StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
             }
         }
-        //catalogAdapter?.submitData(viewModel.getCatalogList())
 
     }
 
@@ -171,7 +179,6 @@ class HomeFragment : Fragment() {
             adapter = this@HomeFragment.categoryAdapter
             layoutManager = GridLayoutManager(requireContext(), 4)
         }
-        //categoryAdapter.submitDataCategory(viewModel.getCategoryList())
     }
 
     private fun setBindCategory(data: List<Category>){
