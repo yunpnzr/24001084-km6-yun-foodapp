@@ -76,7 +76,7 @@
                 android:enabled="false"/>
         </com.google.android.material.textfield.TextInputLayout>
 
-        <TextView
+        <!--<TextView
             android:id="@+id/tv_title_password"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -111,7 +111,7 @@
                 android:padding="8dp"
                 android:textSize="14sp"
                 android:enabled="false"/>
-        </com.google.android.material.textfield.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>-->
 
         <TextView
             android:id="@+id/tv_title_email"
@@ -122,7 +122,7 @@
             android:layout_marginHorizontal="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ed_password" />
+            app:layout_constraintTop_toBottomOf="@+id/ed_name" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/ed_email"
@@ -149,18 +149,30 @@
                 android:enabled="false"/>
         </com.google.android.material.textfield.TextInputLayout>
 
+        <TextView
+            android:id="@+id/tv_change_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ganti password menggunakan email"
+            android:layout_marginVertical="32dp"
+            android:layout_marginHorizontal="16dp"
+            android:textColor="?attr/colorPrimary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ed_email" />
+
         <Button
             android:id="@+id/btn_logout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginVertical="32dp"
             android:layout_marginHorizontal="16dp"
-            android:text="Keluar"
+            android:text="@string/exit"
             android:backgroundTint="?attr/colorError"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ed_email" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_change_password" />
 
         <com.google.android.material.progressindicator.CircularProgressIndicator
             android:id="@+id/pb_profile"
