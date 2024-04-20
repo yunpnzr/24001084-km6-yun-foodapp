@@ -27,10 +27,6 @@ class ProfileViewModel(private val repository: UserRepository): ViewModel() {
         return repository.updateProfile(name).asLiveData(Dispatchers.IO)
     }
 
-    fun doChangePassword(password: String): LiveData<ResultWrapper<Boolean>>{
-        return repository.updatePassword(password).asLiveData(Dispatchers.IO)
-    }
-
     fun doChangePasswordByEmail(): Boolean {
         return repository.requestChangePasswordByEmail()
     }
