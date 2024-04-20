@@ -56,13 +56,16 @@ class ProfileFragment : Fragment() {
     }
 
     private fun setEditEnabledOrDisabled(isEnabledOrDisabledEdit: Boolean) {
-        if(!isEnabledOrDisabledEdit){
+        /*if(!isEnabledOrDisabledEdit){
             binding.etName.isEnabled = false
-            //binding.etPassword.isEnabled = false
+            binding.etPassword.isEnabled = false
         } else {
             binding.etName.isEnabled = true
-            //binding.etPassword.isEnabled = true
-        }
+            binding.etPassword.isEnabled = true
+        }*///binding.etPassword.isEnabled = true
+
+        //binding.etPassword.isEnabled = false
+        binding.etName.isEnabled = isEnabledOrDisabledEdit
     }
 
     private fun setEnableOrDisableEdit(isEnabledOrDisabledEdit: Boolean) {
@@ -122,7 +125,7 @@ class ProfileFragment : Fragment() {
     private fun changePasswordDialog() {
         val dialog = AlertDialog.Builder(requireContext()).setMessage(getString(R.string.check_email_change_password))
             .setPositiveButton(getString(R.string.yes)
-            ){ dialog, id ->
+            ){ _, _ ->
                 viewModel.doLogout()
                 navigateToLogin()
             }.create()
@@ -133,13 +136,13 @@ class ProfileFragment : Fragment() {
         val dialog = AlertDialog.Builder(requireContext()).setMessage(getString(R.string.validate_logout))
             .setPositiveButton(
                 getString(R.string.yes)
-            ) { dialog, id ->
+            ) { _, _ ->
                 viewModel.doLogout()
                 navigateToLogin()
             }
             .setNegativeButton(
                 getString(R.string.no)
-            ) { dialog, id ->
+            ) { _, _ ->
 
             }.create()
         dialog.show()
