@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -115,9 +116,19 @@ class HomeFragment : Fragment() {
         viewModel.getCategoryList().observe(viewLifecycleOwner){getCategory->
             getCategory.proceedWhen(
                 doOnSuccess = {
+                    binding.layoutCategoryMenu.tvNotFound.isVisible = false
+                    binding.layoutCategoryMenu.pbCategory.isVisible = false
                     it.payload?.let {data ->
                         setBindCategory(data)
                     }
+                },
+                doOnLoading = {
+                    binding.layoutCategoryMenu.tvNotFound.isVisible = false
+                    binding.layoutCategoryMenu.pbCategory.isVisible = true
+                },
+                doOnError = {
+                    binding.layoutCategoryMenu.tvNotFound.isVisible = true
+                    binding.layoutCategoryMenu.pbCategory.isVisible = false
                 }
             )
         }
@@ -127,9 +138,19 @@ class HomeFragment : Fragment() {
         viewModel.getCatalogList(category).observe(viewLifecycleOwner){getCatalog->
             getCatalog.proceedWhen (
                 doOnSuccess = {
+                    binding.layoutListCatalog.tvNotFound.isVisible = false
+                    binding.layoutListCatalog.pbCatalog.isVisible = false
                     it.payload?.let{data->
                         setBindCatalog(data)
                     }
+                },
+                doOnLoading = {
+                    binding.layoutListCatalog.tvNotFound.isVisible = false
+                    binding.layoutListCatalog.pbCatalog.isVisible = true
+                },
+                doOnError = {
+                    binding.layoutListCatalog.tvNotFound.isVisible = true
+                    binding.layoutListCatalog.pbCatalog.isVisible = false
                 }
             )
         }
