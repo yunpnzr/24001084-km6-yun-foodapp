@@ -74,4 +74,7 @@
     <string name="lets_login">Yuk login!</string>
     <string name="exit">Keluar</string>
     <string name="check_email_change_password">Silahkan cek email</string>
+    <string name="greetings">Selamat datang! 👋🏼</string>
+    <string name="hello_user">Halo, %1$s 👋🏼</string>
+    <string name="change_password">Ganti password</string>
 </resources>

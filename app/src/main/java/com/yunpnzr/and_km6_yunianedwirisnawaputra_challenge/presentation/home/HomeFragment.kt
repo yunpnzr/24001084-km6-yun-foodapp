@@ -13,6 +13,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.R
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.base.OnItemClickedListener
+import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.datasource.auth.AuthDataSource
+import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.datasource.auth.FirebaseAuthDataSource
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.datasource.catalog.CatalogApiDataSource
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.datasource.catalog.CatalogDataSource
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.datasource.category.CategoryApiDataSource
@@ -27,6 +29,10 @@ import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.repository.Cate
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.repository.CategoryRepositoryImpl
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.repository.PrefRepository
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.repository.PrefRepositoryImpl
+import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.repository.UserRepository
+import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.repository.UserRepositoryImpl
+import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.source.firebase.FirebaseServices
+import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.source.firebase.FirebaseServicesImpl
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.source.local.pref.UserPreference
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.source.local.pref.UserPreferenceImpl
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.source.network.service.ApiService
@@ -45,13 +51,24 @@ class HomeFragment : Fragment() {
         val service = ApiService.invoke()
         val categoryDataSource: CategoryDataSource = CategoryApiDataSource(service)
         val categoryRepository: CategoryRepository = CategoryRepositoryImpl(categoryDataSource)
+
         val catalogDataSource: CatalogDataSource = CatalogApiDataSource(service)
         val catalogRepository: CatalogRepository = CatalogRepositoryImpl(catalogDataSource)
         //val userPreference = UserPreferenceImpl(requireContext())
+
         val userPreference: UserPreference = UserPreferenceImpl(requireContext())
-        val userDataSource: PrefDataSource = PrefDataSourceImpl(userPreference)
-        val userRepository: PrefRepository = PrefRepositoryImpl(userDataSource)
-        GenericViewModelFactory.create(HomeViewModel(categoryRepository, catalogRepository, userRepository))
+        val prefDataSource: PrefDataSource = PrefDataSourceImpl(userPreference)
+        val prefRepository: PrefRepository = PrefRepositoryImpl(prefDataSource)
+
+        val firebaseService: FirebaseServices = FirebaseServicesImpl()
+        val userDataSource: AuthDataSource = FirebaseAuthDataSource(firebaseService)
+        val userRepository: UserRepository = UserRepositoryImpl(userDataSource)
+        GenericViewModelFactory.create(HomeViewModel(
+            categoryRepository,
+            catalogRepository,
+            prefRepository,
+            userRepository
+        ))
     }
 
     private lateinit var catalogAdapter: CatalogMenuAdapter
@@ -80,6 +97,18 @@ class HomeFragment : Fragment() {
         getCategoryData()
         //getCatalogData(null)
 
+        showUserData()
+
+    }
+
+    private fun showUserData() {
+        if (!viewModel.isLoggedIn()) {
+            binding.layoutHeader.tvHeaderName.text = getString(R.string.greetings)
+        } else {
+            viewModel.getUser()?.let {user ->
+                binding.layoutHeader.tvHeaderName.text = getString(R.string.hello_user, user.name)
+            }
+        }
     }
 
     private fun getCategoryData(){
