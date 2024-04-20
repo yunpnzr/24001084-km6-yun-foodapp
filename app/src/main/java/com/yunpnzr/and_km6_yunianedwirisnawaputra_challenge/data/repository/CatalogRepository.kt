@@ -11,7 +11,6 @@ import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.utils.proceedFlow
 import kotlinx.coroutines.flow.Flow
 
 interface CatalogRepository {
-    //fun getCatalog(): List<Catalog>
     fun getCatalog(category: String? = null): Flow<ResultWrapper<List<Catalog>>>
     fun createOrder(
         profile: String,
@@ -21,7 +20,6 @@ interface CatalogRepository {
 }
 
 class CatalogRepositoryImpl(private val dataSource: CatalogDataSource): CatalogRepository{
-    //override fun getCatalog(): List<Catalog> = dataSource.getCatalogDataSource()
     override fun getCatalog(category: String?): Flow<ResultWrapper<List<Catalog>>> {
         return proceedFlow {
             dataSource.getCatalogDataSource(category).data.toCatalogs()
@@ -50,5 +48,3 @@ class CatalogRepositoryImpl(private val dataSource: CatalogDataSource): CatalogR
     }
 
 }
-
-//baru sampe repository rombaknya

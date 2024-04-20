@@ -3,6 +3,5 @@ package com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.datasource.cat
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.source.network.model.category.CategoryResponse
 
 interface CategoryDataSource {
-    //fun getCategoryDataSource(): List<Category>
     suspend fun getCategoryDataSource(): CategoryResponse
 }
