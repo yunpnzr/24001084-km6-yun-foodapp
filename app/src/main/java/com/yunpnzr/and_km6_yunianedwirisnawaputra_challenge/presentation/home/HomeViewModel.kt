@@ -14,7 +14,6 @@ import kotlinx.coroutines.Dispatchers
 class HomeViewModel(
     private val categoryRepository: CategoryRepository,
     private val catalogRepository: CatalogRepository,
-    //private val userPreference: UserPreference
     private val prefRepository: PrefRepository,
     private val userRepository: UserRepository
 ): ViewModel() {
@@ -27,8 +26,6 @@ class HomeViewModel(
     init {
         _isUsingGridMode.value = isUsingGridMode()
     }
-
-    //fun getCatalogList() = catalogRepository.getCatalog()
 
     fun getCatalogList(category: String? = null) = catalogRepository.getCatalog(category).asLiveData(Dispatchers.IO)
     fun getCategoryList() = categoryRepository.getCategory().asLiveData(Dispatchers.IO)
