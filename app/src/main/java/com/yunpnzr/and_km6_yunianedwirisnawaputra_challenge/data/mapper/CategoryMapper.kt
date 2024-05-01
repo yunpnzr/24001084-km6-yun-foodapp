@@ -6,8 +6,7 @@ import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.source.network.
 fun CategoryItemResponse?.toCategory() =
     Category(
         name = this?.nama.orEmpty(),
-        imageUrl = this?.imageUrl.orEmpty()
+        imageUrl = this?.imageUrl.orEmpty(),
     )
 
-fun Collection<CategoryItemResponse>?.toCategories() =
-    this?.map { it.toCategory() } ?: listOf()
+fun Collection<CategoryItemResponse>?.toCategories() = this?.map { it.toCategory() } ?: listOf()

@@ -4,10 +4,11 @@ import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.source.local.pr
 
 interface PrefDataSource {
     fun isUsingGridMode(): Boolean
+
     fun setUsingGridMode(isUsingDarkMode: Boolean)
 }
 
-class PrefDataSourceImpl(private val userPreference: UserPreference): PrefDataSource{
+class PrefDataSourceImpl(private val userPreference: UserPreference) : PrefDataSource {
     override fun isUsingGridMode(): Boolean {
         return userPreference.isUsingGridMode()
     }
@@ -15,5 +16,4 @@ class PrefDataSourceImpl(private val userPreference: UserPreference): PrefDataSo
     override fun setUsingGridMode(isUsingDarkMode: Boolean) {
         return userPreference.setUsingGridMode(isUsingDarkMode)
     }
-
 }

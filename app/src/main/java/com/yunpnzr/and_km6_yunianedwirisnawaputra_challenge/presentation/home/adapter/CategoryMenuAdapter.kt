@@ -10,9 +10,8 @@ import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.model.Category
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.databinding.ItemCategoryMenuBinding
 
 class CategoryMenuAdapter(
-    private val itemClick : (Category)->Unit
-): RecyclerView.Adapter<CategoryMenuAdapter.CategoryViewHolder>() {
-
+    private val itemClick: (Category) -> Unit,
+) : RecyclerView.Adapter<CategoryMenuAdapter.CategoryViewHolder>() {
     private val data = mutableListOf<Category>()
 
     @SuppressLint("NotifyDataSetChanged")
@@ -22,17 +21,17 @@ class CategoryMenuAdapter(
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun submitDataCategory(items: List<Category>){
+    fun submitDataCategory(items: List<Category>) {
         data.addAll(items)
         notifyDataSetChanged()
     }
 
     inner class CategoryViewHolder(
-        private val binding: ItemCategoryMenuBinding
-    ): RecyclerView.ViewHolder(binding.root){
-        fun bind(item: Category){
-            with(item){
-                binding.ivCategoryMenu.load(item.imageUrl){
+        private val binding: ItemCategoryMenuBinding,
+    ) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(item: Category) {
+            with(item) {
+                binding.ivCategoryMenu.load(item.imageUrl) {
                     placeholder(R.drawable.img_loading_picture)
                     error(R.drawable.img_error)
                 }
@@ -44,13 +43,16 @@ class CategoryMenuAdapter(
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryViewHolder {
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int,
+    ): CategoryViewHolder {
         return CategoryViewHolder(
             ItemCategoryMenuBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
-                false
-            )
+                false,
+            ),
         )
     }
 
@@ -58,7 +60,10 @@ class CategoryMenuAdapter(
         return data.size
     }
 
-    override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
+    override fun onBindViewHolder(
+        holder: CategoryViewHolder,
+        position: Int,
+    ) {
         holder.bind(data[position])
     }
 }

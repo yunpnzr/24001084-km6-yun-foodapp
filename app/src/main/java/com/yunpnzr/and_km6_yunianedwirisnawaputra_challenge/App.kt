@@ -1,11 +1,18 @@
 package com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge
 
 import android.app.Application
-import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.source.local.database.AppDatabase
+import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.di.AppModule
+import org.koin.android.ext.koin.androidContext
+import org.koin.android.ext.koin.androidLogger
+import org.koin.core.context.startKoin
 
-class App: Application() {
+class App : Application() {
     override fun onCreate() {
         super.onCreate()
-        AppDatabase.getDatabase(this)
+        startKoin {
+            androidLogger()
+            androidContext(this@App)
+            modules(AppModule.modules)
+        }
     }
 }

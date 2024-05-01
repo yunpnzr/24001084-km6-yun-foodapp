@@ -1,8 +1,7 @@
 package com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge
 
-import org.junit.Test
-
 import org.junit.Assert.*
+import org.junit.Test
 
 /**
  * Example local unit test, which will execute on the development machine (host).

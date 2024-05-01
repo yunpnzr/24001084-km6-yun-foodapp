@@ -4,8 +4,11 @@ import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.model.User
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.model.toUser
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.source.firebase.FirebaseServices
 
-class FirebaseAuthDataSource(private val service: FirebaseServices): AuthDataSource {
-    override suspend fun doLogin(email: String, password: String): Boolean {
+class FirebaseAuthDataSource(private val service: FirebaseServices) : AuthDataSource {
+    override suspend fun doLogin(
+        email: String,
+        password: String,
+    ): Boolean {
         return service.doLogin(email, password)
     }
 

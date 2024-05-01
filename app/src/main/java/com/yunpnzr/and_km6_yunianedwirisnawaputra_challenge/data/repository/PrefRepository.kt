@@ -4,10 +4,11 @@ import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.datasource.pref
 
 interface PrefRepository {
     fun isUsingGridMode(): Boolean
+
     fun setUsingGridMode(isUsingDarkMode: Boolean)
 }
 
-class PrefRepositoryImpl(private val dataSource: PrefDataSource): PrefRepository {
+class PrefRepositoryImpl(private val dataSource: PrefDataSource) : PrefRepository {
     override fun isUsingGridMode(): Boolean {
         return dataSource.isUsingGridMode()
     }
@@ -15,5 +16,4 @@ class PrefRepositoryImpl(private val dataSource: PrefDataSource): PrefRepository
     override fun setUsingGridMode(isUsingDarkMode: Boolean) {
         return dataSource.setUsingGridMode(isUsingDarkMode)
     }
-
 }

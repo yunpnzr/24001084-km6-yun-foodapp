@@ -13,56 +13,69 @@ import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.databinding.ItemList
 
 class CatalogMenuAdapter(
     private val listener: OnItemClickedListener<Catalog>,
-    private val listMode: Int = LIST_MODE
-): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-
-    companion object{
+    private val listMode: Int = LIST_MODE,
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    companion object {
         const val GRID_MODE = 0
         const val LIST_MODE = 1
     }
 
-    private var asyncDiffer = AsyncListDiffer(
-        this, object : DiffUtil.ItemCallback<Catalog>(){
-            override fun areItemsTheSame(oldItem: Catalog, newItem: Catalog): Boolean {
-                return oldItem.id == newItem.id
-            }
+    private var asyncDiffer =
+        AsyncListDiffer(
+            this,
+            object : DiffUtil.ItemCallback<Catalog>() {
+                override fun areItemsTheSame(
+                    oldItem: Catalog,
+                    newItem: Catalog,
+                ): Boolean {
+                    return oldItem.id == newItem.id
+                }
 
-            override fun areContentsTheSame(oldItem: Catalog, newItem: Catalog): Boolean {
-                return oldItem.hashCode() == newItem.hashCode()
-            }
-
-        }
-    )
+                override fun areContentsTheSame(
+                    oldItem: Catalog,
+                    newItem: Catalog,
+                ): Boolean {
+                    return oldItem.hashCode() == newItem.hashCode()
+                }
+            },
+        )
 
     fun submitData(data: List<Catalog>) {
         asyncDiffer.submitList(data)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int,
+    ): RecyclerView.ViewHolder {
         return if (listMode == GRID_MODE) {
-            CatalogGridViewHolder (
+            CatalogGridViewHolder(
                 ItemGridCatalogMenuBinding.inflate(
                     LayoutInflater.from(parent.context),
                     parent,
-                    false
-                ),listener
+                    false,
+                ),
+                listener,
             )
         } else {
             CatalogListViewHolder(
                 ItemListCatalogMenuBinding.inflate(
                     LayoutInflater.from(parent.context),
                     parent,
-                    false
-                ),listener
+                    false,
+                ),
+                listener,
             )
         }
     }
 
     override fun getItemCount(): Int = asyncDiffer.currentList.size
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+    override fun onBindViewHolder(
+        holder: RecyclerView.ViewHolder,
+        position: Int,
+    ) {
         if (holder !is ViewHolderBinder<*>) return
         (holder as ViewHolderBinder<Catalog>).bind(asyncDiffer.currentList[position])
     }
-
 }

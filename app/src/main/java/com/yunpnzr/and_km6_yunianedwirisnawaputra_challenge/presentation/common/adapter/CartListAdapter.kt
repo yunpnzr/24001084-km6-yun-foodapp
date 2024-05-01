@@ -14,42 +14,64 @@ import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.presentation.cart.ad
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.presentation.cart.adapter.CartViewHolder
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.presentation.common.CartListener
 
-class CartListAdapter(private val cartListener: CartListener? = null):
-    RecyclerView.Adapter<ViewHolder>(){
-
+class CartListAdapter(private val cartListener: CartListener? = null) :
+    RecyclerView.Adapter<ViewHolder>() {
     private val dataDiffer =
-        AsyncListDiffer(this, object : DiffUtil.ItemCallback<Cart>() {
-            override fun areItemsTheSame(oldItem: Cart, newItem: Cart): Boolean {
-                return oldItem.id == newItem.id && oldItem.menuId == newItem.menuId
-            }
+        AsyncListDiffer(
+            this,
+            object : DiffUtil.ItemCallback<Cart>() {
+                override fun areItemsTheSame(
+                    oldItem: Cart,
+                    newItem: Cart,
+                ): Boolean {
+                    return oldItem.id == newItem.id && oldItem.menuId == newItem.menuId
+                }
 
-            override fun areContentsTheSame(oldItem: Cart, newItem: Cart): Boolean {
-                return oldItem.hashCode() == newItem.hashCode()
-            }
-        })
+                override fun areContentsTheSame(
+                    oldItem: Cart,
+                    newItem: Cart,
+                ): Boolean {
+                    return oldItem.hashCode() == newItem.hashCode()
+                }
+            },
+        )
 
     fun submitData(data: List<Cart>) {
         dataDiffer.submitList(data)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return if (cartListener != null) CartViewHolder(
-            ItemCartMenuBinding.inflate(
-                LayoutInflater.from(parent.context), parent, false
-            ), cartListener
-        ) else CartOrderViewHolder(
-            ItemCheckoutMenuBinding.inflate(
-                LayoutInflater.from(parent.context), parent, false
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int,
+    ): ViewHolder {
+        return if (cartListener != null) {
+            CartViewHolder(
+                ItemCartMenuBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false,
+                ),
+                cartListener,
             )
-        )
+        } else {
+            CartOrderViewHolder(
+                ItemCheckoutMenuBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false,
+                ),
+            )
+        }
     }
 
     override fun getItemCount(): Int {
         return dataDiffer.currentList.size
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    override fun onBindViewHolder(
+        holder: ViewHolder,
+        position: Int,
+    ) {
         (holder as ViewHolderBinder<Cart>).bind(dataDiffer.currentList[position])
     }
-
 }

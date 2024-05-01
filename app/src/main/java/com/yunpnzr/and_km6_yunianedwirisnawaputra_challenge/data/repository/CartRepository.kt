@@ -17,36 +17,38 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 
 interface CartRepository {
+    fun getUserCartData(): Flow<ResultWrapper<Pair<List<Cart>, Double>>>
 
-    fun getUserCartData(): Flow<ResultWrapper<Pair<List<Cart>,Double>>>
-
-    fun getCheckoutData(): Flow<ResultWrapper<Triple<List<Cart>,List<PriceItem>, Double>>>
+    fun getCheckoutData(): Flow<ResultWrapper<Triple<List<Cart>, List<PriceItem>, Double>>>
 
     fun createCart(
         menu: Catalog,
         quantity: Int,
-        notes: String? = null
+        notes: String? = null,
     ): Flow<ResultWrapper<Boolean>>
 
     fun decreaseCart(item: Cart): Flow<ResultWrapper<Boolean>>
+
     fun increaseCart(item: Cart): Flow<ResultWrapper<Boolean>>
+
     fun setCartNotes(item: Cart): Flow<ResultWrapper<Boolean>>
+
     fun deleteCart(item: Cart): Flow<ResultWrapper<Boolean>>
 
     fun deleteAll(): Flow<ResultWrapper<Boolean>>
-
 }
 
-class CartRepositoryImpl(private val cartDataSource: CartDataSource): CartRepository{
+class CartRepositoryImpl(private val cartDataSource: CartDataSource) : CartRepository {
     override fun getUserCartData(): Flow<ResultWrapper<Pair<List<Cart>, Double>>> {
         return cartDataSource.getAllCart()
             .map {
                 proceed {
                     val resultCart = it.toCartList()
-                    val totalPrice = resultCart.sumOf {
-                        it.menuPrice * it.itemQuantity
-                    }
-                    Pair(resultCart,totalPrice)
+                    val totalPrice =
+                        resultCart.sumOf {
+                            it.menuPrice * it.itemQuantity
+                        }
+                    Pair(resultCart, totalPrice)
                 }
             }
             .map {
@@ -85,15 +87,16 @@ class CartRepositoryImpl(private val cartDataSource: CartDataSource): CartReposi
     ): Flow<ResultWrapper<Boolean>> {
         return menu.id?.let { menuId ->
             proceedFlow {
-                val affectedRow = cartDataSource.insertCart(
-                    CartEntity(
-                        menuId = menuId,
-                        itemQuantity = quantity,
-                        menuName = menu.name,
-                        menuImageUrl = menu.imageUrl,
-                        menuPrice = menu.price
+                val affectedRow =
+                    cartDataSource.insertCart(
+                        CartEntity(
+                            menuId = menuId,
+                            itemQuantity = quantity,
+                            menuName = menu.name,
+                            menuImageUrl = menu.imageUrl,
+                            menuPrice = menu.price,
+                        ),
                     )
-                )
                 affectedRow > 0
             }
         } ?: flow {
@@ -102,10 +105,11 @@ class CartRepositoryImpl(private val cartDataSource: CartDataSource): CartReposi
     }
 
     override fun decreaseCart(item: Cart): Flow<ResultWrapper<Boolean>> {
-        val modified = item.copy().apply {
-            itemQuantity -= 1
-        }
-        return if (modified.itemQuantity <= 0){
+        val modified =
+            item.copy().apply {
+                itemQuantity -= 1
+            }
+        return if (modified.itemQuantity <= 0) {
             proceedFlow {
                 cartDataSource.deleteCart(item.toCartEntity()) > 0
             }
@@ -117,9 +121,10 @@ class CartRepositoryImpl(private val cartDataSource: CartDataSource): CartReposi
     }
 
     override fun increaseCart(item: Cart): Flow<ResultWrapper<Boolean>> {
-        val modified = item.copy().apply {
-            itemQuantity += 1
-        }
+        val modified =
+            item.copy().apply {
+                itemQuantity += 1
+            }
         return proceedFlow {
             cartDataSource.updateCart(modified.toCartEntity()) > 0
         }
@@ -143,5 +148,4 @@ class CartRepositoryImpl(private val cartDataSource: CartDataSource): CartReposi
             true
         }
     }
-
 }

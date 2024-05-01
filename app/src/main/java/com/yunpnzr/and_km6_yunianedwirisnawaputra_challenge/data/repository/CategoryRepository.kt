@@ -8,15 +8,14 @@ import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.utils.proceedFlow
 import kotlinx.coroutines.flow.Flow
 
 interface CategoryRepository {
-    //fun getCategory(): List<Category>
+    // fun getCategory(): List<Category>
     fun getCategory(): Flow<ResultWrapper<List<Category>>>
 }
 
-class CategoryRepositoryImpl(private val dataSource: CategoryDataSource): CategoryRepository{
+class CategoryRepositoryImpl(private val dataSource: CategoryDataSource) : CategoryRepository {
     override fun getCategory(): Flow<ResultWrapper<List<Category>>> {
         return proceedFlow {
             dataSource.getCategoryDataSource().data.toCategories()
         }
     }
-
 }

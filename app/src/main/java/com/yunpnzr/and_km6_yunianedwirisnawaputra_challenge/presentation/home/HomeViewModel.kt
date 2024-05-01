@@ -15,9 +15,8 @@ class HomeViewModel(
     private val categoryRepository: CategoryRepository,
     private val catalogRepository: CatalogRepository,
     private val prefRepository: PrefRepository,
-    private val userRepository: UserRepository
-): ViewModel() {
-
+    private val userRepository: UserRepository,
+) : ViewModel() {
     private val _isUsingGridMode = MutableLiveData(false)
 
     val isUsingGridMode: LiveData<Boolean>
@@ -28,17 +27,18 @@ class HomeViewModel(
     }
 
     fun getCatalogList(category: String? = null) = catalogRepository.getCatalog(category).asLiveData(Dispatchers.IO)
+
     fun getCategoryList() = categoryRepository.getCategory().asLiveData(Dispatchers.IO)
 
-    fun changeListMode(){
-        val currentValue = _isUsingGridMode.value?:false
+    fun changeListMode() {
+        val currentValue = _isUsingGridMode.value ?: false
         _isUsingGridMode.postValue(!currentValue)
         setUsingGridMode(!currentValue)
     }
 
     private fun isUsingGridMode() = prefRepository.isUsingGridMode()
-    private fun setUsingGridMode(isUsingGridMode: Boolean) =
-        prefRepository.setUsingGridMode(isUsingGridMode)
+
+    private fun setUsingGridMode(isUsingGridMode: Boolean) = prefRepository.setUsingGridMode(isUsingGridMode)
 
     fun getUser(): User? {
         return userRepository.getCurrentUser()

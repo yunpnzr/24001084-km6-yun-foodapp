@@ -11,17 +11,17 @@ import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.utils.toIndonesianFo
 
 class CatalogListViewHolder(
     private val binding: ItemListCatalogMenuBinding,
-    private val listener: OnItemClickedListener<Catalog>
-): RecyclerView.ViewHolder(binding.root), ViewHolderBinder<Catalog> {
+    private val listener: OnItemClickedListener<Catalog>,
+) : RecyclerView.ViewHolder(binding.root), ViewHolderBinder<Catalog> {
     override fun bind(item: Catalog) {
         item.let {
-            binding.ivCatalogMenu.load(it.imageUrl){
+            binding.ivCatalogMenu.load(it.imageUrl) {
                 placeholder(R.drawable.img_loading_picture)
                 error(R.drawable.img_error)
             }
             binding.tvCatalogName.text = it.name
             binding.tvPriceCatalog.text = it.price.toIndonesianFormat()
-            itemView.setOnClickListener{
+            itemView.setOnClickListener {
                 listener.onClicked(item)
             }
         }

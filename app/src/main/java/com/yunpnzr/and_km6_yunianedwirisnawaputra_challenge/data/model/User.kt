@@ -8,15 +8,16 @@ data class User(
     val name: String,
     val email: String,
     val imgProfile: Uri?,
-    val phoneNumber: String?
+    val phoneNumber: String?,
 )
 
-fun FirebaseUser?.toUser() = this?.let {
-    User(
-        id = this.uid,
-        name = this.displayName.orEmpty(),
-        email = this.email.orEmpty(),
-        imgProfile = this.photoUrl,
-        phoneNumber = this.phoneNumber
-    )
-}
+fun FirebaseUser?.toUser() =
+    this?.let {
+        User(
+            id = this.uid,
+            name = this.displayName.orEmpty(),
+            email = this.email.orEmpty(),
+            imgProfile = this.photoUrl,
+            phoneNumber = this.phoneNumber,
+        )
+    }

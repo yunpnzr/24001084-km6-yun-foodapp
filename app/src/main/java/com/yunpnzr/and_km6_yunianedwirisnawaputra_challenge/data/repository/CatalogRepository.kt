@@ -12,14 +12,15 @@ import kotlinx.coroutines.flow.Flow
 
 interface CatalogRepository {
     fun getCatalog(category: String? = null): Flow<ResultWrapper<List<Catalog>>>
+
     fun createOrder(
         profile: String,
         cart: List<Cart>,
-        totalPrice: Int
+        totalPrice: Int,
     ): Flow<ResultWrapper<Boolean>>
 }
 
-class CatalogRepositoryImpl(private val dataSource: CatalogDataSource): CatalogRepository{
+class CatalogRepositoryImpl(private val dataSource: CatalogDataSource) : CatalogRepository {
     override fun getCatalog(category: String?): Flow<ResultWrapper<List<Catalog>>> {
         return proceedFlow {
             dataSource.getCatalogDataSource(category).data.toCatalogs()
@@ -29,22 +30,24 @@ class CatalogRepositoryImpl(private val dataSource: CatalogDataSource): CatalogR
     override fun createOrder(
         profile: String,
         cart: List<Cart>,
-        totalPrice: Int
+        totalPrice: Int,
     ): Flow<ResultWrapper<Boolean>> {
         return proceedFlow {
-            dataSource.createOrder(CheckoutRequestResponse(
-                username = profile,
-                orders = cart.map {
-                    CheckoutItemRequestResponse(
-                        nama = it.menuName,
-                        harga = it.menuPrice.toInt(),
-                        qty = it.itemQuantity,
-                        catatan = it.itemNotes
-                    )
-                },
-                total = totalPrice
-            )).status ?: false
+            dataSource.createOrder(
+                CheckoutRequestResponse(
+                    username = profile,
+                    orders =
+                        cart.map {
+                            CheckoutItemRequestResponse(
+                                nama = it.menuName,
+                                harga = it.menuPrice.toInt(),
+                                qty = it.itemQuantity,
+                                catatan = it.itemNotes,
+                            )
+                        },
+                    total = totalPrice,
+                ),
+            ).status ?: false
         }
     }
-
 }

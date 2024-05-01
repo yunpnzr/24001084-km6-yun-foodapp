@@ -9,13 +9,13 @@ import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.repository.User
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.utils.ResultWrapper
 import kotlinx.coroutines.Dispatchers
 
-class ProfileViewModel(private val repository: UserRepository): ViewModel() {
+class ProfileViewModel(private val repository: UserRepository) : ViewModel() {
     private val _isEnableOrDisableEdit = MutableLiveData(false)
     val isEnableOrDisableEdit: LiveData<Boolean>
         get() = _isEnableOrDisableEdit
 
-    fun changeEditMode(){
-        val currentValue = isEnableOrDisableEdit.value?: false
+    fun changeEditMode() {
+        val currentValue = isEnableOrDisableEdit.value ?: false
         _isEnableOrDisableEdit.postValue(!currentValue)
     }
 

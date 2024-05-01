@@ -10,29 +10,28 @@ import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.source.local.da
 @Database(
     entities = arrayOf(CartEntity::class),
     version = 1,
-    exportSchema = false)
-abstract class AppDatabase: RoomDatabase() {
-
+    exportSchema = false,
+)
+abstract class AppDatabase : RoomDatabase() {
     abstract fun cartDao(): CartDao
 
-    companion object{
-
+    companion object {
         private const val DB_NAME = "food.db"
 
-        @Volatile
-        private var INSTANCE: AppDatabase? = null
+        /*@Volatile
+        private var INSTANCE: AppDatabase? = null*/
 
-        fun getDatabase(context: Context): AppDatabase {
-            return INSTANCE ?: synchronized(this){
-                val instance = Room.databaseBuilder(
-                    context.applicationContext,
-                    AppDatabase::class.java,
-                    DB_NAME
-                ).fallbackToDestructiveMigration().build()
-                INSTANCE = instance
-                instance
-            }
+        fun createInstance(context: Context): AppDatabase {
+            // return INSTANCE ?: synchronized(this){
+            //    val instance = Room.databaseBuilder(
+            return Room.databaseBuilder(
+                context.applicationContext,
+                AppDatabase::class.java,
+                DB_NAME,
+            ).fallbackToDestructiveMigration().build()
+            //    INSTANCE = instance
+            //    instance
+            // }
         }
-
     }
 }

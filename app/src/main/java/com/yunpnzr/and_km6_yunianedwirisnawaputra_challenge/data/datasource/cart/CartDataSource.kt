@@ -4,17 +4,21 @@ import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.source.local.da
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.source.local.database.entity.CartEntity
 import kotlinx.coroutines.flow.Flow
 
-interface CartDataSource{
+interface CartDataSource {
     fun getAllCart(): Flow<List<CartEntity>>
+
     suspend fun insertCart(cart: CartEntity): Long
+
     suspend fun updateCart(cart: CartEntity): Int
+
     suspend fun deleteCart(cart: CartEntity): Int
+
     fun deleteAll()
 }
 
 class CartDatabaseDataSource(
-    private val dao: CartDao
-): CartDataSource{
+    private val dao: CartDao,
+) : CartDataSource {
     override fun getAllCart(): Flow<List<CartEntity>> {
         return dao.getAllCart()
     }
@@ -34,5 +38,4 @@ class CartDatabaseDataSource(
     override fun deleteAll() {
         return dao.deleteAll()
     }
-
 }

@@ -3,34 +3,21 @@ package com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.presentation.auth.l
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.R
-import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.datasource.auth.AuthDataSource
-import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.datasource.auth.FirebaseAuthDataSource
-import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.repository.UserRepository
-import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.repository.UserRepositoryImpl
-import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.source.firebase.FirebaseServices
-import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.source.firebase.FirebaseServicesImpl
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.databinding.ActivityLoginBinding
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.presentation.auth.register.RegisterActivity
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.presentation.main.MainActivity
-import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.utils.GenericViewModelFactory
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.utils.proceedWhen
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LoginActivity : AppCompatActivity() {
-
     private val binding: ActivityLoginBinding by lazy {
         ActivityLoginBinding.inflate(layoutInflater)
     }
 
-    private val viewModel: LoginViewModel by viewModels {
-        val service: FirebaseServices = FirebaseServicesImpl()
-        val dataSource: AuthDataSource = FirebaseAuthDataSource(service)
-        val repository: UserRepository = UserRepositoryImpl(dataSource)
-        GenericViewModelFactory.create(LoginViewModel(repository))
-    }
+    private val loginViewModel: LoginViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,7 +30,7 @@ class LoginActivity : AppCompatActivity() {
         binding.layoutInputLogin.btnLogin.setOnClickListener {
             inputLogin()
         }
-        binding.layoutInputLogin.tvNotHaveAccountRegister.setOnClickListener{
+        binding.layoutInputLogin.tvNotHaveAccountRegister.setOnClickListener {
             navigateRegister()
         }
     }
@@ -54,8 +41,11 @@ class LoginActivity : AppCompatActivity() {
         doLogin(email, password)
     }
 
-    private fun doLogin(email: String, password: String) {
-        viewModel.doLogin(email, password).observe(this){result ->
+    private fun doLogin(
+        email: String,
+        password: String,
+    ) {
+        loginViewModel.doLogin(email, password).observe(this) { result ->
             result.proceedWhen(
                 doOnSuccess = {
                     binding.layoutInputLogin.pbLogin.isVisible = false
@@ -63,7 +53,7 @@ class LoginActivity : AppCompatActivity() {
                     Toast.makeText(
                         this,
                         getString(R.string.login_success),
-                        Toast.LENGTH_SHORT
+                        Toast.LENGTH_SHORT,
                     ).show()
                     navigateToMain()
                 },
@@ -77,22 +67,26 @@ class LoginActivity : AppCompatActivity() {
                     Toast.makeText(
                         this,
                         getString(R.string.login_failed),
-                        Toast.LENGTH_SHORT
+                        Toast.LENGTH_SHORT,
                     ).show()
-                }
+                },
             )
         }
     }
 
     private fun navigateToMain() {
-        startActivity(Intent(this, MainActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-        })
+        startActivity(
+            Intent(this, MainActivity::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+            },
+        )
     }
 
     private fun navigateRegister() {
-        startActivity(Intent(this, RegisterActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
-        })
+        startActivity(
+            Intent(this, RegisterActivity::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
+            },
+        )
     }
 }
