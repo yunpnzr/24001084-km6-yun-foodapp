@@ -28,5 +28,4 @@ class CartOrderViewHolder(
     private fun setCartNotes(item: Cart) {
         binding.tvNotesCheckout.text = item.itemNotes
     }
-
 }

@@ -10,8 +10,7 @@ fun CatalogItemResponse?.toCatalog() =
         price = this?.harga?.toDouble() ?: 0.0,
         desc = this?.detail.orEmpty(),
         marketAddress = this?.alamatResto.orEmpty(),
-        mapUrl = "https://maps.app.goo.gl/h4wQKqaBuXzftGK77"
+        mapUrl = "https://maps.app.goo.gl/h4wQKqaBuXzftGK77",
     )
 
-fun Collection<CatalogItemResponse>?.toCatalogs() =
-    this?.map { it.toCatalog() } ?: listOf()
+fun Collection<CatalogItemResponse>?.toCatalogs() = this?.map { it.toCatalog() } ?: listOf()

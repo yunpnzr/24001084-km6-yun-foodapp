@@ -131,7 +131,7 @@
                         android:id="@+id/title_pay_method"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="Metode Pembayaran"
+                        android:text="@string/payment_method"
                         android:textSize="14sp"
                         android:textStyle="bold"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -160,7 +160,7 @@
                             android:gravity="center"
                             android:background="@color/color_selector_toogle_background"
                             android:textColor="@color/color_selector_toggle_text_checkout"
-                            android:text="Ambil Sendiri" />
+                            android:text="@string/self_take" />
 
                         <RadioButton
                             android:id="@+id/rb_pay_ewallet"
@@ -171,7 +171,7 @@
                             android:gravity="center"
                             android:background="@color/color_selector_toogle_background"
                             android:textColor="@color/color_selector_toggle_text_checkout"
-                            android:text="Kirimin Dong" />
+                            android:text="@string/send_by_courier" />
                     </RadioGroup>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -199,7 +199,7 @@
                         android:layout_height="wrap_content"
                         android:textSize="14sp"
                         android:textStyle="bold"
-                        android:text="Ringkasan Pembayaran"
+                        android:text="@string/payment_summary"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -241,7 +241,7 @@
                         android:id="@+id/tv_title_total_checkout"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Total Harga:"
+                        android:text="@string/total_price"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -269,7 +269,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="8dp"
                         android:layout_marginVertical="16dp"
-                        android:text="Checkout"
+                        android:text="@string/checkout"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"

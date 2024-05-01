@@ -6,31 +6,40 @@ import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.utils.ResultWrapper
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.utils.proceedFlow
 import kotlinx.coroutines.flow.Flow
 
-interface UserRepository{
+interface UserRepository {
     @Throws(exceptionClasses = [Exception::class])
     fun doLogin(
         email: String,
-        password: String
+        password: String,
     ): Flow<ResultWrapper<Boolean>>
 
     @Throws(exceptionClasses = [Exception::class])
     fun doRegister(
         name: String,
         email: String,
-        password: String
+        password: String,
     ): Flow<ResultWrapper<Boolean>>
 
     fun updateProfile(name: String? = null): Flow<ResultWrapper<Boolean>>
+
     fun updatePassword(newPassword: String): Flow<ResultWrapper<Boolean>>
+
     fun updateEmail(newEmail: String): Flow<ResultWrapper<Boolean>>
+
     fun requestChangePasswordByEmail(): Boolean
+
     fun doLogout(): Boolean
+
     fun isLoggedIn(): Boolean
+
     fun getCurrentUser(): User?
 }
 
-class UserRepositoryImpl(private val dataSource: AuthDataSource): UserRepository {
-    override fun doLogin(email: String, password: String): Flow<ResultWrapper<Boolean>> {
+class UserRepositoryImpl(private val dataSource: AuthDataSource) : UserRepository {
+    override fun doLogin(
+        email: String,
+        password: String,
+    ): Flow<ResultWrapper<Boolean>> {
         return proceedFlow { dataSource.doLogin(email, password) }
     }
 
@@ -69,5 +78,4 @@ class UserRepositoryImpl(private val dataSource: AuthDataSource): UserRepository
     override fun getCurrentUser(): User? {
         return dataSource.getCurrentUser()
     }
-
 }

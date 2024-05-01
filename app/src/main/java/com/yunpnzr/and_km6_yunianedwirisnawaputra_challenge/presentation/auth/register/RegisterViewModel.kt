@@ -7,8 +7,12 @@ import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.repository.User
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.utils.ResultWrapper
 import kotlinx.coroutines.Dispatchers
 
-class RegisterViewModel(private val repository: UserRepository): ViewModel() {
-    fun doRegister(name: String, email: String, password: String): LiveData<ResultWrapper<Boolean>> {
+class RegisterViewModel(private val repository: UserRepository) : ViewModel() {
+    fun doRegister(
+        name: String,
+        email: String,
+        password: String,
+    ): LiveData<ResultWrapper<Boolean>> {
         return repository.doRegister(name, email, password).asLiveData(Dispatchers.IO)
     }
 

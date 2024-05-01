@@ -3,7 +3,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="search_menu">Mau cari apa?</string>
-    <string name="loading_text">Memuat data...</string>
+    <string name="loading_text">Memuat data&#8230;</string>
     <string name="discount">Diskon 10%!</string>
     <string name="desc_banner">Dapatkan diskonmu disini</string>
     <string name="currency">Rp.</string>
@@ -12,7 +12,7 @@
     <string name="add_cart_plus">+</string>
     <string name="add_cart">Tambah ke keranjang - Rp.0</string>
     <string name="title_location">Lokasi</string>
-    <string name="show_price_add_cart_button">Tambah ke keranjang - Rp.</string>
+    <string name="show_price_add_cart_button">Tambah ke keranjang - Rp.%1$s</string>
     <string name="error_data">Data error, tidak ditemukan</string>
     <string name="empty_cart">Yah keranjang kamu kosong :(</string>
     <string name="delivery_method">Metode Pengiriman</string>
@@ -78,4 +78,14 @@
     <string name="hello_user">Halo, %1$s 👋🏼</string>
     <string name="change_password">Ganti password</string>
     <string name="data_not_found">Tidak ada data</string>
+    <string name="add_menu_success">Menu berhasil ditambahkan!</string>
+    <string name="payment_method">Metode Pembayaran</string>
+    <string name="self_take">Ambil Sendiri</string>
+    <string name="send_by_courier">Kirimin Dong</string>
+    <string name="payment_summary">Ringkasan Pembayaran</string>
+    <string name="checkout">Checkout</string>
+    <string name="confirm_password">Konfirmasi Password</string>
+    <string name="home">Home</string>
+    <string name="cart">Cart</string>
+    <string name="profile">Profile</string>
 </resources>

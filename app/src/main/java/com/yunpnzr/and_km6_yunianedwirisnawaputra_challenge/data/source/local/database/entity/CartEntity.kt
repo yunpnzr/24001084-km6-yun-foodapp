@@ -19,5 +19,5 @@ data class CartEntity(
     @ColumnInfo("item_quantity")
     val itemQuantity: Int = 0,
     @ColumnInfo("item_notes")
-    val itemNotes: String? = null
+    val itemNotes: String? = null,
 )

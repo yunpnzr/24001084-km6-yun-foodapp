@@ -9,38 +9,30 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.R
-import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.datasource.auth.AuthDataSource
-import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.datasource.auth.FirebaseAuthDataSource
-import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.repository.UserRepository
-import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.repository.UserRepositoryImpl
-import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.source.firebase.FirebaseServices
-import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.source.firebase.FirebaseServicesImpl
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.databinding.FragmentProfileBinding
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.presentation.auth.login.LoginActivity
-import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.utils.GenericViewModelFactory
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.utils.proceedWhen
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ProfileFragment : Fragment() {
-
     private lateinit var binding: FragmentProfileBinding
-    private val viewModel: ProfileViewModel by viewModels{
-        val service: FirebaseServices = FirebaseServicesImpl()
-        val dataSource: AuthDataSource = FirebaseAuthDataSource(service)
-        val repository: UserRepository = UserRepositoryImpl(dataSource)
-        GenericViewModelFactory.create(ProfileViewModel(repository))
-    }
+
+    private val profileViewModel: ProfileViewModel by viewModel()
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding = FragmentProfileBinding.inflate(layoutInflater,container,false)
+        binding = FragmentProfileBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
         setClickListener()
         observeEditMode()
@@ -49,7 +41,7 @@ class ProfileFragment : Fragment() {
     }
 
     private fun showUserData() {
-        viewModel.getCurrentUser()?.let {
+        profileViewModel.getCurrentUser()?.let {
             binding.etName.setText(it.name)
             binding.etEmail.setText(it.email)
         }
@@ -62,58 +54,65 @@ class ProfileFragment : Fragment() {
         } else {
             binding.etName.isEnabled = true
             binding.etPassword.isEnabled = true
-        }*///binding.etPassword.isEnabled = true
+        }*/
+        // binding.etPassword.isEnabled = true
 
-        //binding.etPassword.isEnabled = false
+        // binding.etPassword.isEnabled = false
         binding.etName.isEnabled = isEnabledOrDisabledEdit
     }
 
     private fun setEnableOrDisableEdit(isEnabledOrDisabledEdit: Boolean) {
         binding.layoutTopBarProfile.ivEdit.setImageResource(
-            if (!isEnabledOrDisabledEdit){
+            if (!isEnabledOrDisabledEdit) {
                 R.drawable.ic_edit
             } else {
                 R.drawable.ic_checklist
-            }
+            },
         )
     }
 
     private fun observeEditMode() {
-        viewModel.isEnableOrDisableEdit.observe(viewLifecycleOwner){ isEnabledOrDisabledEdit ->
+        profileViewModel.isEnableOrDisableEdit.observe(viewLifecycleOwner) { isEnabledOrDisabledEdit ->
             setEnableOrDisableEdit(isEnabledOrDisabledEdit)
             setEditEnabledOrDisabled(isEnabledOrDisabledEdit)
         }
     }
 
     private fun setClickListener() {
-        binding.layoutTopBarProfile.ivEdit.setOnClickListener{
-            viewModel.changeEditMode()
+        binding.layoutTopBarProfile.ivEdit.setOnClickListener {
+            profileViewModel.changeEditMode()
 
             val newName = binding.etName.text.toString()
 
-            if (viewModel.isEnableOrDisableEdit.value == true) {
-                viewModel.doChangeProfile(newName).observe(viewLifecycleOwner) { result ->
+            if (profileViewModel.isEnableOrDisableEdit.value == true) {
+                profileViewModel.doChangeProfile(newName).observe(viewLifecycleOwner) { result ->
                     result.proceedWhen(
                         doOnSuccess = {
                             binding.pbProfile.isVisible = false
-                            Toast.makeText(requireContext(),
-                                getString(R.string.change_name_success), Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                requireContext(),
+                                getString(R.string.change_name_success),
+                                Toast.LENGTH_SHORT,
+                            ).show()
                         },
                         doOnLoading = {
                             binding.pbProfile.isVisible = true
                         },
                         doOnError = {
                             binding.pbProfile.isVisible = false
-                            Toast.makeText(requireContext(),
-                                getString(R.string.change_name_failed), Toast.LENGTH_SHORT).show()
-                        }
+                            Toast.makeText(
+                                requireContext(),
+                                getString(R.string.change_name_failed),
+                                Toast.LENGTH_SHORT,
+                            ).show()
+                        },
                     )
                 }
             }
         }
 
-        binding.tvChangePassword.setOnClickListener{
-            viewModel.doChangePasswordByEmail()
+        binding.tvChangePassword.setOnClickListener {
+            profileViewModel.doChangePasswordByEmail()
             changePasswordDialog()
         }
 
@@ -123,34 +122,38 @@ class ProfileFragment : Fragment() {
     }
 
     private fun changePasswordDialog() {
-        val dialog = AlertDialog.Builder(requireContext()).setMessage(getString(R.string.check_email_change_password))
-            .setPositiveButton(getString(R.string.yes)
-            ){ _, _ ->
-                viewModel.doLogout()
-                navigateToLogin()
-            }.create()
+        val dialog =
+            AlertDialog.Builder(requireContext()).setMessage(getString(R.string.check_email_change_password))
+                .setPositiveButton(
+                    getString(R.string.yes),
+                ) { _, _ ->
+                    profileViewModel.doLogout()
+                    navigateToLogin()
+                }.create()
         dialog.show()
     }
 
     private fun doLogout() {
-        val dialog = AlertDialog.Builder(requireContext()).setMessage(getString(R.string.validate_logout))
-            .setPositiveButton(
-                getString(R.string.yes)
-            ) { _, _ ->
-                viewModel.doLogout()
-                navigateToLogin()
-            }
-            .setNegativeButton(
-                getString(R.string.no)
-            ) { _, _ ->
-
-            }.create()
+        val dialog =
+            AlertDialog.Builder(requireContext()).setMessage(getString(R.string.validate_logout))
+                .setPositiveButton(
+                    getString(R.string.yes),
+                ) { _, _ ->
+                    profileViewModel.doLogout()
+                    navigateToLogin()
+                }
+                .setNegativeButton(
+                    getString(R.string.no),
+                ) { _, _ ->
+                }.create()
         dialog.show()
     }
 
     private fun navigateToLogin() {
-        startActivity(Intent(requireContext(), LoginActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-        })
+        startActivity(
+            Intent(requireContext(), LoginActivity::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+            },
+        )
     }
 }

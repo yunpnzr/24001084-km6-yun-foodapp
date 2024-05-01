@@ -16,37 +16,37 @@ import retrofit2.http.Query
 import java.util.concurrent.TimeUnit
 
 interface ApiService {
-
     @GET("category")
     suspend fun getCategory(): CategoryResponse
 
     @GET("listmenu")
     suspend fun getCatalog(
-        @Query("c") category: String? = null
-    ):CatalogResponse
+        @Query("c") category: String? = null,
+    ): CatalogResponse
 
     @POST("order")
     suspend fun createOrder(
-        @Body checkoutRequest: CheckoutRequestResponse
+        @Body checkoutRequest: CheckoutRequestResponse,
     ): CheckoutResponse
 
-    companion object{
+    companion object {
         @JvmStatic
-        operator fun invoke(): ApiService{
+        operator fun invoke(): ApiService {
             val levelInterceptor = HttpLoggingInterceptor.Level.BODY
             val loggingInterceptor = HttpLoggingInterceptor().setLevel(levelInterceptor)
-            val okHttpClient = OkHttpClient.Builder()
-                .connectTimeout(100,TimeUnit.SECONDS)
-                .readTimeout(100,TimeUnit.SECONDS)
-                .addInterceptor(loggingInterceptor)
-                .build()
-            val retrofit = Retrofit.Builder()
-                .baseUrl(BuildConfig.BASE_URL)
-                .client(okHttpClient)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
+            val okHttpClient =
+                OkHttpClient.Builder()
+                    .connectTimeout(100, TimeUnit.SECONDS)
+                    .readTimeout(100, TimeUnit.SECONDS)
+                    .addInterceptor(loggingInterceptor)
+                    .build()
+            val retrofit =
+                Retrofit.Builder()
+                    .baseUrl(BuildConfig.BASE_URL)
+                    .client(okHttpClient)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build()
             return retrofit.create(ApiService::class.java)
         }
     }
-
 }

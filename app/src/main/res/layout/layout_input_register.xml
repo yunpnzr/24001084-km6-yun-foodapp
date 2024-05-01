@@ -128,7 +128,7 @@
         android:id="@+id/tv_title_confirm_password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Konfirmasi Password"
+        android:text="@string/confirm_password"
         android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="parent"

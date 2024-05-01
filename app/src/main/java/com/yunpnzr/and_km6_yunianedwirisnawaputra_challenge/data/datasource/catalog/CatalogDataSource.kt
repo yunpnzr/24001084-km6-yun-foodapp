@@ -6,5 +6,6 @@ import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.source.network.
 
 interface CatalogDataSource {
     suspend fun getCatalogDataSource(category: String? = null): CatalogResponse
+
     suspend fun createOrder(payload: CheckoutRequestResponse): CheckoutResponse
 }

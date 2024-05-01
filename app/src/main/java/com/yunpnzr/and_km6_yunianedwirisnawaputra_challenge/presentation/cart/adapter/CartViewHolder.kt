@@ -11,7 +11,7 @@ import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.utils.toIndonesianFo
 
 class CartViewHolder(
     private val binding: ItemCartMenuBinding,
-    private val cartListener: CartListener?
+    private val cartListener: CartListener?,
 ) : RecyclerView.ViewHolder(binding.root), ViewHolderBinder<Cart> {
     override fun bind(item: Cart) {
         setCartData(item)
@@ -34,9 +34,10 @@ class CartViewHolder(
         binding.etNotes.setText(item.itemNotes)
         binding.etNotes.doneEditing {
             binding.etNotes.clearFocus()
-            val newItem = item.copy().apply {
-                itemNotes = binding.etNotes.text.toString().trim()
-            }
+            val newItem =
+                item.copy().apply {
+                    itemNotes = binding.etNotes.text.toString().trim()
+                }
             cartListener?.onUserDoneEditingNotes(newItem)
         }
     }

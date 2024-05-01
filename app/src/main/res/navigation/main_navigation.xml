@@ -5,7 +5,7 @@
     android:id="@+id/main_navigation"
     app:startDestination="@+id/menu_tab_home">
 
-0    <fragment
+   <fragment
         android:id="@+id/menu_tab_home"
         android:name="com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.presentation.home.HomeFragment"
         android:label="fragment_home"

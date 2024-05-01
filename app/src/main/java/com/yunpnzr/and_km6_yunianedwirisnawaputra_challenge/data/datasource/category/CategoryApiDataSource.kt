@@ -4,10 +4,9 @@ import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.source.network.
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.source.network.service.ApiService
 
 class CategoryApiDataSource(
-    private val service: ApiService
-): CategoryDataSource {
+    private val service: ApiService,
+) : CategoryDataSource {
     override suspend fun getCategoryDataSource(): CategoryResponse {
         return service.getCategory()
     }
-
 }

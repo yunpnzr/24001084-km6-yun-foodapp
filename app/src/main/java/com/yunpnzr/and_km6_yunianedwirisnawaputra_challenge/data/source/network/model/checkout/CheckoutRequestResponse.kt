@@ -5,15 +5,10 @@ import com.google.gson.annotations.SerializedName
 
 @Keep
 data class CheckoutRequestResponse(
-
-	@field:SerializedName("total")
-	val total: Int? = null,
-
-	@field:SerializedName("orders")
-	val orders: List<CheckoutItemRequestResponse>? = null,
-
-	@field:SerializedName("username")
-	val username: String? = null
+    @field:SerializedName("total")
+    val total: Int? = null,
+    @field:SerializedName("orders")
+    val orders: List<CheckoutItemRequestResponse>? = null,
+    @field:SerializedName("username")
+    val username: String? = null,
 )
-
-
