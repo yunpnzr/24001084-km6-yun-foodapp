@@ -120,18 +120,21 @@ class CartRepositoryImplTest {
 
     @Test
     fun `When get cart error`() {
-        /*every { dataSource.getAllCart() } throws IllegalStateException("Error")
+        every { dataSource.getAllCart() } returns
+            flow {
+                throw IllegalStateException("Error")
+            }
         runTest {
             repository.getUserCartData().map {
                 delay(100)
                 it
             }.test {
-                delay(210)
+                delay(2201)
                 val actualData = expectMostRecentItem()
                 assertTrue(actualData is ResultWrapper.Error)
                 verify { dataSource.getAllCart() }
             }
-        }*/
+        }
     }
 
     @Test
@@ -254,7 +257,7 @@ class CartRepositoryImplTest {
                 delay(100)
                 it
             }.test {
-                delay(110)
+                delay(1110)
                 val actualData = expectMostRecentItem()
                 assertTrue(actualData is ResultWrapper.Loading)
                 verify { dataSource.getAllCart() }
@@ -264,6 +267,21 @@ class CartRepositoryImplTest {
 
     @Test
     fun `When get checkout data error`() {
+        every { dataSource.getAllCart() } returns
+            flow {
+                throw IllegalStateException("Error")
+            }
+        runTest {
+            repository.getCheckoutData().map {
+                delay(100)
+                it
+            }.test {
+                delay(2210)
+                val actualData = expectMostRecentItem()
+                assertTrue(actualData is ResultWrapper.Error)
+                verify { dataSource.getAllCart() }
+            }
+        }
     }
 
     @Test
@@ -293,7 +311,27 @@ class CartRepositoryImplTest {
         every { mockProduct.id } returns "123"
         coEvery { dataSource.insertCart(any()) } returns 1
         runTest {
-            repository.createCart(mockProduct, 1, "asdasdsad")
+            repository.createCart(mockProduct, 1, "asdasdasd")
+                .map {
+                    delay(100)
+                    it
+                }.test {
+                    delay(201)
+                    val actualData = expectMostRecentItem()
+                    assertTrue(actualData is ResultWrapper.Success)
+                    assertEquals(true, actualData.payload)
+                    coVerify { dataSource.insertCart(any()) }
+                }
+        }
+    }
+
+    @Test
+    fun `When create cart success notes null`() {
+        val mockProduct = mockk<Catalog>(relaxed = true)
+        every { mockProduct.id } returns "123"
+        coEvery { dataSource.insertCart(any()) } returns 1
+        runTest {
+            repository.createCart(mockProduct, 1)
                 .map {
                     delay(100)
                     it
@@ -474,9 +512,45 @@ class CartRepositoryImplTest {
 
     @Test
     fun deleteCart() {
+        val mockCart =
+            Cart(
+                id = 1,
+                menuId = "asdasds",
+                menuName = "adfsdfsdf",
+                menuImageUrl = "sdfsdfsdfd",
+                menuPrice = 8000.0,
+                itemQuantity = 3,
+                itemNotes = "sdfsdfsdfsdf",
+            )
+        coEvery { dataSource.deleteCart(any()) } returns 1
+        runTest {
+            repository.deleteCart(mockCart).map {
+                delay(100)
+                it
+            }.test {
+                delay(210)
+                val actualData = expectMostRecentItem()
+                assertTrue(actualData is ResultWrapper.Success)
+                coVerify(atLeast = 1) { dataSource.deleteCart(any()) }
+            }
+        }
     }
 
     @Test
     fun deleteAll() {
+        coEvery { dataSource.deleteAll() } returns Unit
+
+        runTest {
+            repository.deleteAll().map {
+                delay(100)
+                it
+            }.test {
+                delay(210)
+                val actualData = expectMostRecentItem()
+                assertTrue(actualData is ResultWrapper.Success)
+                assertTrue(actualData.payload ?: false)
+                coVerify(atLeast = 1) { dataSource.deleteAll() }
+            }
+        }
     }
 }

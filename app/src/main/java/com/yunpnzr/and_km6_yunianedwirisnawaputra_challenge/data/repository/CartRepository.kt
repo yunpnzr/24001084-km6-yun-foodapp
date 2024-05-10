@@ -12,6 +12,7 @@ import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.utils.proceed
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.utils.proceedFlow
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
@@ -54,6 +55,8 @@ class CartRepositoryImpl(private val cartDataSource: CartDataSource) : CartRepos
             .map {
                 if (it.payload?.first?.isEmpty() == false) return@map it
                 ResultWrapper.Empty(it.payload)
+            }.catch {
+                emit(ResultWrapper.Error(Exception(it)))
             }
             .onStart {
                 emit(ResultWrapper.Loading())
@@ -74,6 +77,8 @@ class CartRepositoryImpl(private val cartDataSource: CartDataSource) : CartRepos
             }.map {
                 if (it.payload?.first?.isEmpty() == false) return@map it
                 ResultWrapper.Empty(it.payload)
+            }.catch {
+                emit(ResultWrapper.Error(Exception(it)))
             }.onStart {
                 emit(ResultWrapper.Loading())
                 delay(2000)

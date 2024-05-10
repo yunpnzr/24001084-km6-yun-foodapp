@@ -118,4 +118,5 @@ dependencies {
     testImplementation(libs.mockk.agent)
     testImplementation(libs.coroutine.test)
     testImplementation(libs.turbine)
+    testImplementation(libs.core.testing)
 }
