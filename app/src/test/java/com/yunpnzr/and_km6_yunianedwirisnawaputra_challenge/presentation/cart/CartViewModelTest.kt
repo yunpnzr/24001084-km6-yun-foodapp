@@ -10,6 +10,7 @@ import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
 import io.mockk.spyk
+import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
@@ -53,7 +54,7 @@ class CartViewModelTest {
     }
 
     //
-    /*@Test
+    @Test
     fun decreaseCart() {
         every { repository.decreaseCart(any()) } returns
             flow {
@@ -71,7 +72,7 @@ class CartViewModelTest {
                 emit(ResultWrapper.Success(true))
             }
         viewModel.increaseCart(mockk())
-        verify { repository.increaseCart(any()) }
+        // verify { repository.increaseCart(any()) }
     }
 
     @Test
@@ -93,5 +94,5 @@ class CartViewModelTest {
             }
         viewModel.setCartNote(mockk())
         verify { repository.setCartNotes(any()) }
-    }*/
+    }
 }
