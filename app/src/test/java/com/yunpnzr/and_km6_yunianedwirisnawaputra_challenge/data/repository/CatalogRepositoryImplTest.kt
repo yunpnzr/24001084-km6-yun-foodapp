@@ -5,8 +5,6 @@ import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.datasource.cata
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.model.Cart
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.source.network.model.catalog.CatalogItemResponse
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.source.network.model.catalog.CatalogResponse
-import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.source.network.model.checkout.CheckoutItemRequestResponse
-import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.source.network.model.checkout.CheckoutRequestResponse
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.source.network.model.checkout.CheckoutResponse
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.utils.ResultWrapper
 import io.mockk.MockKAnnotations
@@ -16,10 +14,10 @@ import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 
@@ -168,24 +166,97 @@ class CatalogRepositoryImplTest {
             )
         val totalPrice = 35
         val username = "hitler"
-        val mockFlow =
-            flow {
-                emit(mockCart)
+        val mockResponse = mockk<CheckoutResponse>(relaxed = true)
+        runTest {
+            coEvery { dataSource.createOrder(any()) } returns mockResponse
+            repository.createOrder(username, mockCart, totalPrice).map {
+                delay(100)
+                it
+            }.test {
+                delay(210)
+                val data = expectMostRecentItem()
+                assertTrue(data is ResultWrapper.Success)
+                coVerify { dataSource.createOrder(any()) }
             }
-        val mockItemRequest = listOf<CheckoutItemRequestResponse>()
-        val mockRequest = listOf<CheckoutRequestResponse>()
-        val mockResponse = mockk<CheckoutResponse>()
+        }
     }
 
     @Test
     fun `when create order loading`() {
+        val mockCart =
+            listOf(
+                Cart(
+                    id = 1,
+                    menuId = "asdasdasd",
+                    menuName = "sdfsdf",
+                    menuImageUrl = "sdfsdfsd",
+                    menuPrice = 10000.0,
+                    itemQuantity = 2,
+                    itemNotes = "dfgdsfgsddfg",
+                ),
+                Cart(
+                    id = 2,
+                    menuId = "sdfsadfsadf",
+                    menuName = "dfgdfgd",
+                    menuImageUrl = "dsfgsadfsa",
+                    menuPrice = 20000.0,
+                    itemQuantity = 1,
+                    itemNotes = "sdfsdfsdf",
+                ),
+            )
+        val totalPrice = 35
+        val username = "hitler"
+        val mockResponse = mockk<CheckoutResponse>(relaxed = true)
+        runTest {
+            coEvery { dataSource.createOrder(any()) } returns mockResponse
+            repository.createOrder(username, mockCart, totalPrice).map {
+                delay(100)
+                it
+            }.test {
+                delay(110)
+                val data = expectMostRecentItem()
+                assertTrue(data is ResultWrapper.Loading)
+                coVerify { dataSource.createOrder(any()) }
+            }
+        }
     }
 
     @Test
     fun `when create order error`() {
-    }
-
-    @Test
-    fun `when create order empty`() {
+        val mockCart =
+            listOf(
+                Cart(
+                    id = 1,
+                    menuId = "asdasdasd",
+                    menuName = "sdfsdf",
+                    menuImageUrl = "sdfsdfsd",
+                    menuPrice = 10000.0,
+                    itemQuantity = 2,
+                    itemNotes = "dfgdsfgsddfg",
+                ),
+                Cart(
+                    id = 2,
+                    menuId = "sdfsadfsadf",
+                    menuName = "dfgdfgd",
+                    menuImageUrl = "dsfgsadfsa",
+                    menuPrice = 20000.0,
+                    itemQuantity = 1,
+                    itemNotes = "sdfsdfsdf",
+                ),
+            )
+        val totalPrice = 35
+        val username = "hitler"
+        runTest {
+            coEvery { dataSource.createOrder(any()) } throws IllegalStateException("Mock error")
+            repository.createOrder(username, mockCart, totalPrice).map {
+                delay(100)
+                it
+            }.test {
+                delay(210)
+                val data = expectMostRecentItem()
+                assertTrue(data is ResultWrapper.Error)
+                coVerify { dataSource.createOrder(any()) }
+            }
+        }
     }
 }
