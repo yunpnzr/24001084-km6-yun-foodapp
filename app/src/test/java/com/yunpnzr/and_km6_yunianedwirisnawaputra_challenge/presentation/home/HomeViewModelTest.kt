@@ -7,11 +7,15 @@ import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.repository.Cate
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.repository.PrefRepository
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.repository.UserRepository
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.tools.MainCoroutineRule
+import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.tools.getOrAwaitValue
+import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.utils.ResultWrapper
 import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
+import io.mockk.mockk
 import io.mockk.spyk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
@@ -68,10 +72,26 @@ class HomeViewModelTest {
 
     @Test
     fun getCatalogList() {
+        every { catalogRepository.getCatalog() } returns
+            flow {
+                emit(
+                    ResultWrapper.Success(listOf(mockk(relaxed = true), mockk(relaxed = true))),
+                )
+            }
+        val result = viewModel.getCatalogList().getOrAwaitValue()
+        assertEquals(2, result.payload?.size)
     }
 
     @Test
     fun getCategoryList() {
+        every { categoryRepository.getCategory() } returns
+            flow {
+                emit(
+                    ResultWrapper.Success(listOf(mockk(relaxed = true), mockk(relaxed = true))),
+                )
+            }
+        val result = viewModel.getCategoryList().getOrAwaitValue()
+        assertEquals(2, result.payload?.size)
     }
 
     @Test
@@ -94,11 +114,11 @@ class HomeViewModelTest {
                 null,
                 null,
             )
-        runTest {
-            every { userRepository.getCurrentUser() } returns user
-            val result = viewModel.getUser()
-            assertEquals(user, result)
-        }
+        // runTest {
+        every { userRepository.getCurrentUser() } returns user
+        val result = viewModel.getUser()
+        assertEquals(user, result)
+        // }
     }
 
     @Test
