@@ -78,7 +78,7 @@ class CheckoutViewModelTest {
 
     @Test
     fun checkoutCart() {
-        val mockUsername = "user123"
+        val mockUsername = "hitler"
         every { userRepository.getCurrentUser()?.name } returns mockUsername
         val expected = ResultWrapper.Success(true)
         coEvery { catalogRepository.createOrder(any(), any(), any()) } returns
