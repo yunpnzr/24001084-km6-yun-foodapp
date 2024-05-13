@@ -1,7 +1,6 @@
 package com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.presentation.checkout
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.model.Cart
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.repository.CartRepository
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.repository.CatalogRepository
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.data.repository.UserRepository
@@ -9,6 +8,7 @@ import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.tools.MainCoroutineR
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.tools.getOrAwaitValue
 import com.yunpnzr.and_km6_yunianedwirisnawaputra_challenge.utils.ResultWrapper
 import io.mockk.MockKAnnotations
+import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
@@ -17,7 +17,6 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -48,7 +47,13 @@ class CheckoutViewModelTest {
 
         every { cartRepository.getCheckoutData() } returns
             flow {
-                emit(ResultWrapper.Success(mockk()))
+                emit(
+                    ResultWrapper.Success(
+                        Triple(
+                            mockk(relaxed = true), mockk(relaxed = true), 0.0,
+                        ),
+                    ),
+                )
             }
 
         viewModel =
@@ -63,48 +68,25 @@ class CheckoutViewModelTest {
 
     @Test
     fun deleteAllCart() {
-        every { cartRepository.deleteCart(any()) } returns
+        every { cartRepository.deleteAll() } returns
             flow {
                 emit(ResultWrapper.Success(true))
             }
         viewModel.deleteAllCart()
-        // verify { cartRepository.deleteCart(any()) }
+        // verify { cartRepository.deleteAll() }
     }
 
     @Test
     fun checkoutCart() {
-        val mockCart =
-            listOf(
-                Cart(
-                    id = 1,
-                    menuId = "asdasdasd",
-                    menuName = "sdfsdf",
-                    menuImageUrl = "sdfsdfsd",
-                    menuPrice = 10000.0,
-                    itemQuantity = 2,
-                    itemNotes = "dfgdsfgsddfg",
-                ),
-                Cart(
-                    id = 2,
-                    menuId = "sdfsadfsadf",
-                    menuName = "dfgdfgd",
-                    menuImageUrl = "dsfgsadfsa",
-                    menuPrice = 20000.0,
-                    itemQuantity = 1,
-                    itemNotes = "sdfsdfsdf",
-                ),
-            )
-        val totalPrice = 35
-        val username = "hitler"
-        every { catalogRepository.createOrder(username, mockCart, totalPrice) } returns
+        val mockUsername = "user123"
+        every { userRepository.getCurrentUser()?.name } returns mockUsername
+        val expected = ResultWrapper.Success(true)
+        coEvery { catalogRepository.createOrder(any(), any(), any()) } returns
             flow {
-                emit(
-                    ResultWrapper.Success(true),
-                )
+                emit(expected)
             }
         val result = viewModel.checkoutCart().getOrAwaitValue()
-        // Assert that the result is successful
-        assertTrue(result is ResultWrapper.Success && result.payload == true)
+        assertEquals(expected, result)
     }
 
     @Test
