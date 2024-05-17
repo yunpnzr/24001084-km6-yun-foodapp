@@ -17,7 +17,7 @@ class HomeViewModel(
     private val prefRepository: PrefRepository,
     private val userRepository: UserRepository,
 ) : ViewModel() {
-    private val _isUsingGridMode = MutableLiveData(false)
+    val _isUsingGridMode = MutableLiveData(false)
 
     val isUsingGridMode: LiveData<Boolean>
         get() = _isUsingGridMode

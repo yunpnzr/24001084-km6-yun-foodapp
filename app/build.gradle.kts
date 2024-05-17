@@ -113,4 +113,10 @@ dependencies {
     implementation(libs.okhttp.interceptor)
 
     implementation(libs.koin.android)
+
+    androidTestImplementation(libs.mockk.android)
+    testImplementation(libs.mockk.agent)
+    testImplementation(libs.coroutine.test)
+    testImplementation(libs.turbine)
+    testImplementation(libs.core.testing)
 }
